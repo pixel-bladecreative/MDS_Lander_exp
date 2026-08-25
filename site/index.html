@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Retail Edge — Start Your Customization | MODUS</title>
+<meta name="description" content="Thanks for stopping by our booth. Retail Edge closes registers, aisles and self-checkout bays with a dual-sided printed banner that earns its place. Tell us about your store and we'll start your custom design.">
+<meta name="robots" content="noindex, follow">
+<meta property="og:title" content="Retail Edge — Where Loss Prevention Meets Advertising">
+<meta property="og:description" content="Thanks for stopping by our booth. Tell us about your store and one of our specialists will start your custom banner design.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F4068'/%3E%3Crect x='6' y='9' width='20' height='4' rx='1' fill='%23FBA919'/%3E%3Crect x='6' y='15' width='20' height='8' rx='1' fill='%231B76B9'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=Nunito+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Retail Edge — post-booth lead capture
+   Brand tokens taken from the live MODUS design kit.
+   ============================================================ */
+:root{
+  --navy:#0F4068;
+  --navy-deep:#0A2C48;
+  --blue:#1B76B9;
+  --amber:#FBA919;
+  --amber-hot:#FFC048;
+  --ink:#0B0C0E;
+  --grey:#717274;
+  --mist:#CFCFCE;
+  --paper:#F4F6F9;
+  --white:#fff;
+  --seam:#C9D2DC;           /* set from the film's final-frame bottom strip */
+  --ease-out:cubic-bezier(.22,1,.36,1);
+  --shell:min(1240px, 92vw);
+  --display:'Readex Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --accent:'Nunito Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ink); color:var(--ink);
+  font-family:var(--display); font-weight:400; line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img{max-width:100%; display:block}
+h1,h2,h3{margin:0; line-height:1.04; font-weight:700; letter-spacing:-.025em}
+p{margin:0}
+a{color:inherit}
+.eyebrow{
+  font-family:var(--accent); font-weight:800; font-size:.72rem;
+  letter-spacing:.19em; text-transform:uppercase; margin:0;
+}
+
+/* ---------------- header ---------------- */
+.site-header{
+  position:fixed; inset:0 0 auto 0; z-index:70;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1.5rem; padding:1.15rem clamp(1rem,4vw,2.6rem);
+  color:#fff; transition:color .45s ease;
+}
+.site-header::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:230%; z-index:-1;
+  background:linear-gradient(to bottom,rgba(4,10,18,.66),rgba(4,10,18,0));
+  transition:opacity .45s ease; pointer-events:none;
+}
+.site-header.on-light{color:var(--navy)}
+.site-header.on-light::before{opacity:0}
+.hd-mark{display:flex; align-items:center; gap:.85rem; text-decoration:none}
+.hd-mark img{
+  height:26px; width:auto;
+  filter:drop-shadow(0 1px 10px rgba(0,0,0,.5));
+  transition:filter .45s ease;
+}
+.site-header.on-light .hd-mark img{filter:none}
+.hd-right{display:flex; align-items:center; gap:1.4rem}
+.hd-tel{
+  font-family:var(--accent); font-weight:800; font-size:.82rem;
+  letter-spacing:.06em; text-decoration:none; white-space:nowrap;
+  text-shadow:0 1px 18px rgba(0,0,0,.5);
+}
+.site-header.on-light .hd-tel{text-shadow:none}
+.hd-cta{
+  font-family:var(--accent); font-weight:800; font-size:.78rem;
+  letter-spacing:.1em; text-transform:uppercase; text-decoration:none;
+  padding:.72rem 1.3rem; border-radius:100px; white-space:nowrap;
+  background:var(--amber); color:#241703;
+  box-shadow:0 6px 26px rgba(251,169,25,.34);
+  transition:transform .28s var(--ease-out), box-shadow .28s ease;
+}
+.hd-cta:hover{transform:translateY(-2px); box-shadow:0 10px 32px rgba(251,169,25,.46)}
+@media(max-width:720px){ .hd-tel{display:none} }
+
+/* ---------------- film ---------------- */
+.film{position:relative; height:850vh; background:var(--ink)}
+.stage{
+  position:sticky; top:0; height:100vh; height:100svh;
+  overflow:hidden; background:#05070B;
+}
+#film-canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+.stage::after{ /* vignette + seam fade, both driven from JS */
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:3;
+  background:radial-gradient(120% 100% at 50% 45%,transparent 42%,rgba(2,5,10,.5) 100%);
+  opacity:var(--vig,1); transition:opacity .2s linear;
+}
+.seam-fade{
+  position:absolute; inset:auto 0 0 0; height:52vh; z-index:4; pointer-events:none;
+  background:linear-gradient(to bottom,transparent,var(--seam));
+  opacity:var(--seam-a,0);
+}
+/* loader */
+.loader{
+  position:absolute; inset:0; z-index:20; display:grid; place-content:center;
+  gap:1.2rem; justify-items:center; background:#05070B;
+  transition:opacity .7s ease, visibility .7s;
+}
+.loader.done{opacity:0; visibility:hidden}
+.loader img{height:34px; width:auto; opacity:.92}
+.bar{width:min(230px,52vw); height:2px; background:rgba(255,255,255,.16); overflow:hidden}
+.bar i{display:block; height:100%; width:0%; background:var(--amber); transition:width .25s linear}
+.loader small{
+  font-family:var(--accent); font-weight:800; font-size:.66rem;
+  letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.5);
+}
+/* beats */
+.beats{position:absolute; inset:0; z-index:6; pointer-events:none}
+.beat{
+  position:absolute; left:clamp(1.2rem,6vw,6rem); right:clamp(1.2rem,6vw,6rem);
+  top:50%; transform:translateY(-50%); opacity:0; max-width:840px; color:#fff;
+}
+.beat::before{
+  content:""; position:absolute; z-index:-1; inset:-90% -30% -90% -18%;
+  background:radial-gradient(58% 56% at 24% 50%,rgba(3,8,14,.76),rgba(3,8,14,.44) 46%,transparent 78%);
+}
+.beat .eyebrow{color:var(--amber); margin-bottom:1.1rem; text-shadow:0 1px 16px rgba(0,0,0,.6)}
+.beat h2{
+  font-size:clamp(2.3rem,6.6vw,5.4rem); text-shadow:0 2px 40px rgba(0,0,0,.55);
+}
+.beat p.sub{
+  margin-top:1.15rem; font-size:clamp(1rem,1.6vw,1.28rem); font-weight:300;
+  color:rgba(255,255,255,.86); max-width:46ch; text-shadow:0 1px 22px rgba(0,0,0,.6);
+}
+.beat .wordmark{height:clamp(30px,4.6vw,54px); width:auto; margin-bottom:1.5rem;
+  filter:drop-shadow(0 2px 22px rgba(0,0,0,.6))}
+.beat-cta{
+  display:inline-flex; align-items:center; gap:.7rem; margin-top:2rem;
+  pointer-events:auto; text-decoration:none;
+  font-family:var(--accent); font-weight:800; font-size:.8rem;
+  letter-spacing:.13em; text-transform:uppercase;
+  background:var(--amber); color:#241703; padding:1rem 1.8rem; border-radius:100px;
+  box-shadow:0 10px 40px rgba(251,169,25,.4);
+  transition:transform .3s var(--ease-out), box-shadow .3s ease;
+}
+.beat-cta:hover{transform:translateY(-3px); box-shadow:0 16px 50px rgba(251,169,25,.55)}
+/* chapter readout */
+.readout{
+  position:absolute; left:clamp(1rem,4vw,2.6rem); bottom:clamp(1.1rem,3vw,2.1rem);
+  z-index:8; display:flex; align-items:center; gap:.9rem; color:#fff;
+  font-family:var(--accent); font-weight:800; font-size:.64rem;
+  letter-spacing:.2em; text-transform:uppercase;
+  text-shadow:0 1px 16px rgba(0,0,0,.7); transition:color .45s ease;
+}
+.readout.on-light{color:var(--navy); text-shadow:none}
+.readout .track{width:clamp(70px,12vw,140px); height:2px; background:currentColor; opacity:.32}
+.readout .track i{display:block; height:100%; width:0%; background:var(--amber); opacity:1}
+@media(max-width:720px){
+  .film{height:560vh}
+  .beat{top:auto; bottom:16vh; transform:none}
+  .beat::before{inset:-60% -30% -60% -30%}
+}
+@media(prefers-reduced-motion:reduce){
+  .film{height:auto}
+  .stage{position:relative; height:70vh}
+}
+
+/* ---------------- shared section furniture ---------------- */
+.section{
+  position:relative; min-height:min(92vh,900px);
+  display:flex; align-items:center;
+  padding:clamp(4.5rem,11vh,8.5rem) 0;
+}
+.wrap{width:var(--shell); margin:0 auto}
+.section .wrap > *{
+  opacity:0; transform:translateY(26px);
+  transition:opacity .9s var(--ease-out), transform .9s var(--ease-out);
+}
+.section.in .wrap > *{opacity:1; transform:none}
+.section.in .wrap > *:nth-child(2){transition-delay:.09s}
+.section.in .wrap > *:nth-child(3){transition-delay:.18s}
+.section.in .wrap > *:nth-child(4){transition-delay:.27s}
+@media(prefers-reduced-motion:reduce){
+  .section .wrap > *{opacity:1; transform:none; transition:none}
+}
+.lede{font-size:clamp(1.05rem,1.5vw,1.24rem); font-weight:300; max-width:56ch; color:#414449}
+
+/* ---------------- proof ---------------- */
+#proof{
+  background:linear-gradient(to bottom,var(--seam) 0%,var(--paper) 32%,var(--paper) 100%);
+  color:var(--ink);
+}
+#proof .eyebrow{color:var(--blue)}
+#proof h2{font-size:clamp(2.1rem,4.9vw,3.9rem); margin:1rem 0 1.3rem; color:var(--navy)}
+.proof-grid{
+  display:grid; grid-template-columns:1.35fr .95fr; gap:clamp(1rem,2.4vw,2rem);
+  margin-top:clamp(2.2rem,5vw,3.4rem); align-items:stretch;
+}
+.proof-shot{
+  position:relative; border-radius:16px; overflow:hidden; background:var(--navy-deep);
+  box-shadow:0 26px 70px rgba(15,64,104,.22);
+}
+.proof-shot img{width:100%; height:100%; object-fit:cover; min-height:300px}
+.proof-shot figcaption{
+  position:absolute; inset:auto 0 0 0; padding:2.6rem 1.5rem 1.15rem;
+  background:linear-gradient(to top,rgba(6,18,30,.9),transparent);
+  color:#fff; font-family:var(--accent); font-weight:700; font-size:.8rem; letter-spacing:.02em;
+}
+.proof-side{display:flex; flex-direction:column; gap:clamp(1rem,2vw,1.6rem)}
+.proof-card{
+  background:var(--white); border:1px solid #E2E7EE; border-radius:16px;
+  padding:clamp(1.4rem,2.4vw,1.9rem); flex:1;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.proof-card .n{
+  font-family:var(--accent); font-weight:900; color:var(--amber);
+  font-size:.7rem; letter-spacing:.2em; margin-bottom:.6rem;
+}
+.proof-card p{font-size:1.02rem; font-weight:500; color:var(--navy); line-height:1.34}
+.walmart{display:flex; align-items:center; gap:1rem; margin-top:.4rem}
+.walmart img{height:26px; width:auto; opacity:.85}
+.walmart span{font-size:.78rem; color:var(--grey); font-family:var(--accent); font-weight:700}
+@media(max-width:860px){ .proof-grid{grid-template-columns:1fr} }
+
+/* ---------------- lineup ---------------- */
+#lineup{background:var(--navy); color:#fff}
+#lineup .eyebrow{color:var(--amber)}
+#lineup h2{font-size:clamp(2.1rem,4.9vw,3.9rem); margin:1rem 0 1.2rem}
+#lineup .lede{color:rgba(255,255,255,.76)}
+.hero-sku{
+  display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(1.4rem,3.4vw,3.4rem);
+  align-items:center; margin-top:clamp(2.4rem,5vw,3.6rem);
+  background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.13);
+  border-radius:20px; padding:clamp(1.4rem,3vw,2.6rem);
+}
+.hero-sku .shot{background:#fff; border-radius:14px; padding:1rem; display:grid; place-items:center}
+.hero-sku .shot img{width:100%; height:auto; mix-blend-mode:multiply}
+.tag{
+  display:inline-block; font-family:var(--accent); font-weight:900; font-size:.62rem;
+  letter-spacing:.18em; text-transform:uppercase; color:#241703; background:var(--amber);
+  padding:.4rem .8rem; border-radius:100px; margin-bottom:1rem;
+}
+.hero-sku h3{font-size:clamp(1.7rem,3.2vw,2.5rem); margin-bottom:.9rem}
+.hero-sku p{color:rgba(255,255,255,.8); font-weight:300; font-size:1.03rem}
+.spec-row{
+  display:flex; flex-wrap:wrap; gap:1.6rem 2.4rem; margin-top:1.7rem;
+  padding-top:1.5rem; border-top:1px solid rgba(255,255,255,.15);
+}
+.spec-row div{min-width:98px}
+.spec-row dt{
+  font-family:var(--accent); font-weight:800; font-size:.6rem; letter-spacing:.17em;
+  text-transform:uppercase; color:var(--amber); margin-bottom:.35rem;
+}
+.spec-row dd{margin:0; font-size:1.16rem; font-weight:600}
+.sku-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(.9rem,2vw,1.5rem);
+  margin-top:clamp(1rem,2.4vw,1.5rem);
+}
+.sku{
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+  border-radius:16px; padding:1.3rem; display:flex; flex-direction:column;
+}
+.sku .shot{background:#fff; border-radius:10px; padding:.7rem; margin-bottom:1.1rem}
+.sku .shot img{width:100%; height:150px; object-fit:contain; mix-blend-mode:multiply}
+.sku h4{margin:0 0 .55rem; font-size:1.1rem; font-weight:600; letter-spacing:-.01em}
+.sku p{font-size:.87rem; color:rgba(255,255,255,.68); font-weight:300; flex:1; line-height:1.5}
+.sku .mini{
+  margin-top:1rem; padding-top:.85rem; border-top:1px solid rgba(255,255,255,.13);
+  font-family:var(--accent); font-weight:700; font-size:.72rem; color:var(--amber);
+  letter-spacing:.04em;
+}
+.shared{
+  margin-top:clamp(1.6rem,3.4vw,2.4rem); display:flex; flex-wrap:wrap; gap:.6rem;
+}
+.chip{
+  font-family:var(--accent); font-weight:700; font-size:.75rem;
+  padding:.55rem 1rem; border-radius:100px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16);
+  color:rgba(255,255,255,.86);
+}
+@media(max-width:860px){
+  .hero-sku{grid-template-columns:1fr}
+  .sku-grid{grid-template-columns:1fr}
+  .sku{flex-direction:row; gap:1.1rem; align-items:center}
+  .sku .shot{margin-bottom:0; width:118px; flex:none}
+  .sku .shot img{height:90px}
+}
+
+/* ---------------- process ---------------- */
+#process{background:var(--paper)}
+#process .eyebrow{color:var(--blue)}
+#process h2{font-size:clamp(2.1rem,4.9vw,3.9rem); margin:1rem 0 1.2rem; color:var(--navy)}
+.steps{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2.4vw,2rem);
+  margin-top:clamp(2.4rem,5vw,3.4rem); counter-reset:s;
+}
+.step{position:relative; padding-top:2.9rem}
+.step::before{
+  counter-increment:s; content:counter(s,decimal-leading-zero);
+  position:absolute; top:0; left:0;
+  font-family:var(--accent); font-weight:900; font-size:2.5rem;
+  color:var(--amber); line-height:1;
+}
+.step h3{font-size:1.32rem; color:var(--navy); margin-bottom:.7rem; font-weight:600}
+.step p{color:#4A4E55; font-weight:300; font-size:.99rem}
+@media(max-width:860px){ .steps{grid-template-columns:1fr; gap:2rem} }
+
+/* ---------------- form ---------------- */
+#start{
+  background:
+    linear-gradient(150deg,rgba(15,64,104,.97),rgba(10,30,52,.99)),
+    var(--navy-deep);
+  color:#fff; align-items:flex-start;
+}
+.form-head{max-width:52ch; margin-bottom:clamp(2.2rem,4.6vw,3.2rem)}
+.form-head .eyebrow{color:var(--amber)}
+.form-head h2{font-size:clamp(2.2rem,5.2vw,4rem); margin:1rem 0 1.1rem}
+.form-head p{color:rgba(255,255,255,.78); font-weight:300; font-size:1.08rem}
+form{max-width:940px}
+fieldset{border:0; margin:0 0 clamp(1.6rem,3vw,2.3rem); padding:0}
+legend{
+  font-family:var(--accent); font-weight:800; font-size:.68rem; letter-spacing:.19em;
+  text-transform:uppercase; color:var(--amber); margin-bottom:1.1rem; padding:0;
+}
+.grid-2{display:grid; grid-template-columns:1fr 1fr; gap:1.1rem 1.3rem}
+.grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem 1.3rem}
+.field{display:flex; flex-direction:column; gap:.45rem}
+.field.wide{grid-column:1/-1}
+label{
+  font-family:var(--accent); font-weight:700; font-size:.76rem;
+  letter-spacing:.03em; color:rgba(255,255,255,.8);
+}
+label .req{color:var(--amber)}
+input[type=text],input[type=email],input[type=tel],select,textarea{
+  font-family:var(--display); font-size:1rem; color:#fff;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.19);
+  border-radius:9px; padding:.86rem 1rem; width:100%;
+  transition:border-color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+textarea{resize:vertical; min-height:104px}
+select{appearance:none; cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,rgba(255,255,255,.6) 50%),
+                   linear-gradient(135deg,rgba(255,255,255,.6) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 55%, calc(100% - 14px) 55%;
+  background-size:6px 6px,6px 6px; background-repeat:no-repeat;
+}
+select option{background:var(--navy-deep); color:#fff}
+
+input:focus,select:focus,textarea:focus{
+  outline:none; border-color:var(--amber); background:rgba(255,255,255,.12);
+  box-shadow:0 0 0 3px rgba(251,169,25,.16);
+}
+input[aria-invalid=true],select[aria-invalid=true]{
+  border-color:#FF8A7A; background:rgba(255,120,100,.1);
+}
+.hint{
+  font-family:var(--display); font-weight:300; font-size:.8rem;
+  color:rgba(255,255,255,.5); margin-top:-.15rem;
+}
+.err{
+  font-family:var(--accent); font-weight:700; font-size:.72rem; color:#FFB3A6;
+  min-height:0; opacity:0; transition:opacity .2s ease;
+}
+.err.on{opacity:1}
+.opts{display:flex; flex-wrap:wrap; gap:.6rem}
+.opt{position:relative}
+.opt input{position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer}
+.opt span{
+  display:block; font-family:var(--accent); font-weight:700; font-size:.82rem;
+  padding:.72rem 1.1rem; border-radius:100px; cursor:pointer;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.82); transition:all .22s ease;
+}
+.opt input:checked + span{
+  background:var(--amber); border-color:var(--amber); color:#241703;
+}
+.opt input:focus-visible + span{box-shadow:0 0 0 3px rgba(251,169,25,.35)}
+.consent{
+  display:flex; gap:.8rem; align-items:flex-start; margin-top:.4rem;
+  font-size:.87rem; color:rgba(255,255,255,.72); font-weight:300; line-height:1.5;
+}
+.consent input{margin-top:.28rem; accent-color:var(--amber); width:16px; height:16px; flex:none}
+.submit-row{
+  display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;
+  margin-top:clamp(1.6rem,3vw,2.2rem);
+}
+button[type=submit]{
+  position:relative; overflow:hidden; cursor:pointer; border:0;
+  font-family:var(--accent); font-weight:900; font-size:.92rem;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:#241703; background:var(--amber);
+  padding:1.25rem 2.6rem; border-radius:100px;
+  box-shadow:0 12px 44px rgba(251,169,25,.36);
+  transition:transform .28s var(--ease-out), box-shadow .28s ease;
+}
+button[type=submit]::after{
+  content:""; position:absolute; inset:0 auto 0 -60%; width:40%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-18deg); transition:left .6s var(--ease-out);
+}
+button[type=submit]:hover{transform:translateY(-3px); box-shadow:0 18px 56px rgba(251,169,25,.5)}
+button[type=submit]:hover::after{left:120%}
+button[type=submit]:active{transform:translateY(-1px)}
+button[type=submit][disabled]{opacity:.6; cursor:progress; transform:none}
+.assure{font-size:.85rem; color:rgba(255,255,255,.6); font-weight:300; max-width:34ch}
+.form-status{
+  margin-top:1.4rem; font-family:var(--accent); font-weight:700; font-size:.9rem;
+  color:#FFB3A6; display:none;
+}
+.form-status.on{display:block}
+.thanks{display:none}
+.thanks.on{display:block; animation:rise .8s var(--ease-out) both}
+@keyframes rise{from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:none}}
+.thanks h2{font-size:clamp(2rem,4.6vw,3.4rem); margin-bottom:1.1rem}
+.thanks p{color:rgba(255,255,255,.8); font-weight:300; font-size:1.1rem; max-width:50ch}
+.thanks .tel{
+  display:inline-block; margin-top:1.8rem; font-family:var(--accent); font-weight:800;
+  font-size:1.05rem; color:var(--amber); text-decoration:none; letter-spacing:.04em;
+}
+@media(max-width:760px){
+  .grid-2,.grid-3{grid-template-columns:1fr}
+}
+
+/* ---------------- footer ---------------- */
+footer{background:var(--ink); color:rgba(255,255,255,.62); padding:3.4rem 0 2.6rem}
+.foot{
+  width:var(--shell); margin:0 auto; display:flex; flex-wrap:wrap;
+  gap:1.6rem 2.4rem; align-items:center; justify-content:space-between;
+}
+.foot img{height:22px; width:auto; opacity:.8}
+.foot nav{display:flex; flex-wrap:wrap; gap:1.4rem}
+.foot a{
+  font-family:var(--accent); font-weight:700; font-size:.8rem;
+  text-decoration:none; color:rgba(255,255,255,.62); transition:color .2s;
+}
+.foot a:hover{color:var(--amber)}
+.foot small{font-size:.76rem; width:100%; color:rgba(255,255,255,.36)}
+</style>
+</head>
+<body>
+
+<header class="site-header" id="hdr">
+  <a class="hd-mark" href="#top" aria-label="Retail Edge by MODUS">
+    <img src="assets/img/Retail_Edge_noTM.png" alt="Retail Edge">
+  </a>
+  <div class="hd-right">
+    <a class="hd-tel" href="tel:8018810011">801-881-0011</a>
+    <a class="hd-cta" href="#start">Start my design</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ film ============ -->
+  <section class="film" id="film" aria-label="Retail Edge in a closed store">
+    <div class="stage">
+      <canvas id="film-canvas"></canvas>
+      <div class="seam-fade"></div>
+
+      <div class="beats" id="beats">
+        <div class="beat" data-in="-0.1" data-peak="0" data-out="0.13">
+          <p class="eyebrow">Thank you for visiting us at our booth</p>
+          <img class="wordmark" src="assets/img/Retail_Edge_noTM.png" alt="Retail Edge">
+          <h2>Where loss prevention meets advertising.</h2>
+          <p class="sub">You already know how it feels in the hand. Here is what it does at 2am, in a store with nobody in it.</p>
+        </div>
+
+        <div class="beat" data-in="0.15" data-peak="0.22" data-out="0.30">
+          <p class="eyebrow">The problem</p>
+          <h2>An open lane is an open door.</h2>
+          <p class="sub">Cones tip. Chains sag. Carts get pushed aside. The gap at the end of a closed register is the least defended metre of floor you own.</p>
+        </div>
+
+        <div class="beat" data-in="0.38" data-peak="0.46" data-out="0.55">
+          <p class="eyebrow">The fix</p>
+          <h2>One pull closes it.</h2>
+          <p class="sub">Twelve feet of tensioned barrier out of a canister three inches across. A push-through latch keeps the fire marshal happy.</p>
+        </div>
+
+        <div class="beat" data-in="0.60" data-peak="0.68" data-out="0.78">
+          <p class="eyebrow">The upside</p>
+          <h2>Both faces print. Both faces sell.</h2>
+          <p class="sub">Dual-sided, photo-quality, VOC-free fabric. The shopper you turned away still reads something worth reading.</p>
+        </div>
+
+        <div class="beat" data-in="0.86" data-peak="0.94" data-out="2">
+          <p class="eyebrow">Your store</p>
+          <h2>The blank one is yours.</h2>
+          <p class="sub">Tell us the lane, the message and the store count. A specialist starts your artwork this week.</p>
+          <a class="beat-cta" href="#start">Start my design &rarr;</a>
+        </div>
+      </div>
+
+      <div class="readout" id="readout">
+        <span id="ch-label">Closed</span>
+        <span class="track"><i id="ch-bar"></i></span>
+      </div>
+
+      <div class="loader" id="loader">
+        <img src="assets/img/Retail_Edge_noTM.png" alt="Retail Edge">
+        <span class="bar"><i id="bar"></i></span>
+        <small id="pct">Loading 0%</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ proof ============ -->
+  <section class="section" id="proof">
+    <div class="wrap">
+      <p class="eyebrow">Already on the floor</p>
+      <h2>Walmart put it in front of the registers.</h2>
+      <p class="lede">Not a prototype and not a render. Custom lane-closed banners, in English and Spanish, dropped into checkout layouts that were never designed to accommodate them.</p>
+      <div class="proof-grid">
+        <figure class="proof-shot">
+          <img src="assets/img/Retail_Edge_Video_Poster-scaled.jpg" alt="A Retail Edge banner closing a Walmart checkout lane while an associate works behind it" loading="lazy" decoding="async">
+          <figcaption>A live lane, mid-shift. The banner does the talking.</figcaption>
+        </figure>
+        <div class="proof-side">
+          <div class="proof-card">
+            <p class="n">01</p>
+            <p>Eliminated unattended register access and the shrink risk that came with it.</p>
+          </div>
+          <div class="proof-card">
+            <p class="n">02</p>
+            <p>Custom banners carrying clear lane-closed messaging in two languages.</p>
+          </div>
+          <div class="proof-card">
+            <p class="n">03</p>
+            <p>Seamless integration into existing checkout layouts. No millwork, no rebuild.</p>
+            <div class="walmart">
+              <img src="assets/img/Walmart-Logo.png" alt="Walmart">
+              <span>Case study</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ lineup ============ -->
+  <section class="section" id="lineup">
+    <div class="wrap">
+      <p class="eyebrow">Four units, one system</p>
+      <h2>Pick the one that fits your floor.</h2>
+      <p class="lede">Every unit takes the same quick-swap banner cartridge, so a campaign change is a thirty-second job for whoever is closest.</p>
+
+      <div class="hero-sku">
+        <div class="shot">
+          <img src="assets/img/Retail_Edge-Single-Mobile_Stand-Oreo-scaled.jpg" alt="Retail Edge Single Mobile Stand with a printed dual-sided banner extended" loading="lazy" decoding="async">
+        </div>
+        <div>
+          <span class="tag">Most requested at the booth</span>
+          <h3>Single Mobile Stand</h3>
+          <p>Rolls where the closure is. Secures registers, aisleways and exits, then goes back to the stockroom when the lane reopens. This is the one most people pull the handle on.</p>
+          <dl class="spec-row">
+            <div><dt>Banner</dt><dd>12 ft &times; 35 in</dd></div>
+            <div><dt>Retracted</dt><dd>17 &times; 42 in</dd></div>
+            <div><dt>Weight</dt><dd>55 lbs</dd></div>
+            <div><dt>Latch</dt><dd>Push-through</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="sku-grid">
+        <article class="sku">
+          <div class="shot"><img src="assets/img/Retail_Edge-Dual-Mobile_Stand-Roar-scaled.jpg" alt="Retail Edge Dual Mobile Stand with two banners extended" loading="lazy" decoding="async"></div>
+          <div>
+            <h4>Dual Mobile Stand</h4>
+            <p>Two banners off one base for self-checkout bays and wide aisles. Twice the surface at the point of decision.</p>
+            <p class="mini">24 ft total &middot; 72 lbs</p>
+          </div>
+        </article>
+        <article class="sku">
+          <div class="shot"><img src="assets/img/Retail_Edge-Mounted_Barrier-MMs-scaled.jpg" alt="Retail Edge Mounted Barrier fixed to a register with a printed banner extended" loading="lazy" decoding="async"></div>
+          <div>
+            <h4>Mounted Barrier</h4>
+            <p>Fixes to the register, an endcap or racking and disappears into a three-inch canister when the lane is live.</p>
+            <p class="mini">12 ft &middot; 9 lbs</p>
+          </div>
+        </article>
+        <article class="sku">
+          <div class="shot"><img src="assets/img/Retail_Edge-Attachment_Stand-1-scaled.jpg" alt="Retail Edge Attachment Stand, a weighted post used as an anchor point" loading="lazy" decoding="async"></div>
+          <div>
+            <h4>Attachment Stand</h4>
+            <p>A weighted anchor for the spots that have nothing to mount to. Opens up configurations a fixed system cannot reach.</p>
+            <p class="mini">Anchor point &middot; Modular</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="shared">
+        <span class="chip">Industrial aluminium &amp; steel base</span>
+        <span class="chip">Dual-sided full-colour print</span>
+        <span class="chip">Quick-swap cartridge, no tools</span>
+        <span class="chip">Fire-code compliant latch</span>
+        <span class="chip">VOC-free DuraSafe&trade; fabric</span>
+        <span class="chip">Customisable banner length</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ process ============ -->
+  <section class="section" id="process">
+    <div class="wrap">
+      <p class="eyebrow">From booth to floor</p>
+      <h2>Your first banner, in three moves.</h2>
+      <p class="lede">Most of the work is ours. What we need from you is the lane it goes in and the thing you want it to say.</p>
+      <div class="steps">
+        <div class="step">
+          <h3>Tell us the lane</h3>
+          <p>Registers, self-checkout, aisleways or exits &mdash; and roughly how many across how many stores. That decides the unit and the banner length.</p>
+        </div>
+        <div class="step">
+          <h3>Send art, or don't</h3>
+          <p>Print-ready files drop straight in. If you'd rather not, our design team lays out the messaging and sends proofs back for approval.</p>
+        </div>
+        <div class="step">
+          <h3>Swap and go</h3>
+          <p>Cartridges arrive loaded. Changing a campaign later means pulling one cartridge and clicking in the next &mdash; no tools, no downtime, no service call.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ form ============ -->
+  <section class="section" id="start">
+    <div class="wrap">
+      <div id="form-live">
+        <div class="form-head">
+          <p class="eyebrow">Start your customization</p>
+          <h2>Let's design your banner.</h2>
+          <p>Give us a few details and a Retail Edge specialist will come back with unit recommendations and a first artwork direction for your store.</p>
+        </div>
+
+        <form id="lead" novalidate>
+          <fieldset>
+            <legend>Who you are</legend>
+            <div class="grid-2">
+              <div class="field">
+                <label for="fname">First name <span class="req">*</span></label>
+                <input type="text" id="fname" name="first_name" autocomplete="given-name" required>
+                <span class="err" data-for="fname"></span>
+              </div>
+              <div class="field">
+                <label for="lname">Last name <span class="req">*</span></label>
+                <input type="text" id="lname" name="last_name" autocomplete="family-name" required>
+                <span class="err" data-for="lname"></span>
+              </div>
+              <div class="field">
+                <label for="email">Work email <span class="req">*</span></label>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+                <span class="err" data-for="email"></span>
+              </div>
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel">
+                <span class="err" data-for="phone"></span>
+              </div>
+              <div class="field">
+                <label for="company">Company <span class="req">*</span></label>
+                <input type="text" id="company" name="company" autocomplete="organization" required>
+                <span class="err" data-for="company"></span>
+              </div>
+              <div class="field">
+                <label for="role">Your role</label>
+                <input type="text" id="role" name="role" autocomplete="organization-title" aria-describedby="role-hint">
+                <span class="hint" id="role-hint">Loss prevention, store ops, merchandising&hellip;</span>
+                <span class="err" data-for="role"></span>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Your floor</legend>
+            <div class="grid-3">
+              <div class="field">
+                <label for="locations">Store count <span class="req">*</span></label>
+                <select id="locations" name="locations" required>
+                  <option value="">Select&hellip;</option>
+                  <option>1 location</option>
+                  <option>2&ndash;10 locations</option>
+                  <option>11&ndash;50 locations</option>
+                  <option>51&ndash;250 locations</option>
+                  <option>250+ locations</option>
+                </select>
+                <span class="err" data-for="locations"></span>
+              </div>
+              <div class="field">
+                <label for="units">Units needed</label>
+                <select id="units" name="units_estimate">
+                  <option value="">Not sure yet</option>
+                  <option>Under 10</option>
+                  <option>10&ndash;50</option>
+                  <option>50&ndash;250</option>
+                  <option>250+</option>
+                </select>
+                <span class="err" data-for="units"></span>
+              </div>
+              <div class="field">
+                <label for="timeline">Timeline</label>
+                <select id="timeline" name="timeline">
+                  <option value="">Not sure yet</option>
+                  <option>Ready now</option>
+                  <option>This quarter</option>
+                  <option>Next quarter</option>
+                  <option>Budgeting for next year</option>
+                </select>
+                <span class="err" data-for="timeline"></span>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Where it goes <span style="color:rgba(255,255,255,.45);font-weight:700">&mdash; pick any</span></legend>
+            <div class="opts">
+              <label class="opt"><input type="checkbox" name="application" value="Closed registers"><span>Closed registers</span></label>
+              <label class="opt"><input type="checkbox" name="application" value="Self-checkout bays"><span>Self-checkout bays</span></label>
+              <label class="opt"><input type="checkbox" name="application" value="Unmanned aisles"><span>Unmanned aisles</span></label>
+              <label class="opt"><input type="checkbox" name="application" value="Exits"><span>Exits</span></label>
+              <label class="opt"><input type="checkbox" name="application" value="Wide aisles"><span>Wide aisles</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Which unit caught your eye <span style="color:rgba(255,255,255,.45);font-weight:700">&mdash; pick any</span></legend>
+            <div class="opts">
+              <label class="opt"><input type="checkbox" name="product" value="Single Mobile Stand"><span>Single Mobile Stand</span></label>
+              <label class="opt"><input type="checkbox" name="product" value="Dual Mobile Stand"><span>Dual Mobile Stand</span></label>
+              <label class="opt"><input type="checkbox" name="product" value="Mounted Barrier"><span>Mounted Barrier</span></label>
+              <label class="opt"><input type="checkbox" name="product" value="Attachment Stand"><span>Attachment Stand</span></label>
+              <label class="opt"><input type="checkbox" name="product" value="Help me choose"><span>Help me choose</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>What should it say</legend>
+            <div class="field wide">
+              <label for="message">Messaging, artwork or anything else we should know</label>
+              <span class="hint" id="msg-hint">Lane closed in two languages, a seasonal promo, a vendor-funded campaign&hellip;</span>
+              <textarea id="message" name="message" aria-describedby="msg-hint"></textarea>
+              <span class="err" data-for="message"></span>
+            </div>
+            <label class="consent">
+              <input type="checkbox" id="consent" name="consent" value="yes">
+              <span>Send me occasional Retail Edge updates. We'll follow up about your design either way.</span>
+            </label>
+          </fieldset>
+
+          <div class="submit-row">
+            <button type="submit" id="submit">Start my design</button>
+            <p class="assure">A specialist replies within one business day. No obligation, no automated call queue.</p>
+          </div>
+          <p class="form-status" id="status" role="alert"></p>
+        </form>
+      </div>
+
+      <div class="thanks" id="thanks" role="status" aria-live="polite">
+        <p class="eyebrow" style="color:var(--amber)">Received</p>
+        <h2>Thanks &mdash; that's everything we need to start.</h2>
+        <p>A Retail Edge specialist is putting together unit recommendations and a first artwork direction for your store. Expect it within one business day.</p>
+        <p style="margin-top:1.4rem;color:rgba(255,255,255,.6);font-weight:300">In a hurry?</p>
+        <a class="tel" href="tel:8018810011">801-881-0011</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <img src="assets/img/MODUS_Logo_WHT.png" alt="MODUS">
+    <nav>
+      <a href="https://madebymodus.com/retail-edge/">Retail Edge</a>
+      <a href="https://madebymodus.com/case-studies/">Case studies</a>
+      <a href="https://madebymodus.com/faq/">FAQ</a>
+      <a href="https://madebymodus.com/contact/">Contact</a>
+      <a href="https://madebymodus.com/privacy-policy/">Privacy</a>
+    </nav>
+    <small>MODUS, CO. &middot; Retail Edge is a MODUS brand. DuraSafe&trade; and Luminex&trade; are trademarks of MODUS, CO.</small>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   1. LEAD DESTINATION — the one line to change when the real
+      endpoint exists. Leave empty and the form validates, logs
+      the payload to the console and shows the confirmation, so
+      the page is fully demonstrable before it is wired up.
+   ============================================================ */
+var ENDPOINT = "";                 // e.g. "https://madebymodus.com/wp-json/frm/v2/entries"
+var ENDPOINT_METHOD = "POST";
+var ENDPOINT_AS_JSON = true;       // false => sends FormData instead
+
+/* ---------- film config ---------- */
+var FRAME_DIR   = "frames/";
+var FRAME_COUNT = 600;             // rewritten by tools/set-frames.sh after extraction
+var FRAME_EXT   = ".jpg";
+var CHAPTERS = [
+  { at:0.00, name:"Closed" },
+  { at:0.20, name:"The gap" },
+  { at:0.40, name:"Sealed" },
+  { at:0.62, name:"The surface" },
+  { at:0.84, name:"Your store" }
+];
+
+(function(){
+  "use strict";
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var JUMP = new URLSearchParams(location.search).get("jump");
+  if (JUMP !== null && "scrollRestoration" in history) history.scrollRestoration = "manual";
+
+  /* ================= film ================= */
+  var canvas = document.getElementById("film-canvas");
+  var ctx = canvas.getContext("2d", { alpha:false });
+  var filmEl = document.getElementById("film");
+  var stageEl = filmEl.querySelector(".stage");
+  var loader = document.getElementById("loader");
+  var barEl = document.getElementById("bar");
+  var pctEl = document.getElementById("pct");
+  var hdr = document.getElementById("hdr");
+  var readout = document.getElementById("readout");
+  var chLabel = document.getElementById("ch-label");
+  var chBar = document.getElementById("ch-bar");
+  var beats = [].slice.call(document.querySelectorAll(".beat")).map(function(el){
+    return { el:el, in:+el.dataset.in, peak:+el.dataset.peak, out:+el.dataset.out, a:-1 };
+  });
+
+  var images = new Array(FRAME_COUNT);
+  var bitmaps = new Map(), decoding = new Set();
+  var loadedCount = 0, displayed = -1, bmpCenter = -999;
+  var currentFrame = 0, targetFrame = 0, progress = 0;
+  /* Window sized in SECONDS of film, not frames: ~2s ahead, ~1.3s behind at 24fps. */
+  var B_AHEAD = 48, B_KEEP = 62;
+
+  function pad(n){ var s = String(n); while (s.length < 4) s = "0" + s; return s; }
+  function src(i){ return FRAME_DIR + "f_" + pad(i + 1) + FRAME_EXT; }
+
+  function sizeCanvas(){
+    /* DPR capped at 1 — sharpness on a scrub comes from the source matching the
+       canvas, not from more device pixels. */
+    var w = stageEl.clientWidth, h = stageEl.clientHeight;
+    canvas.width = Math.round(w); canvas.height = Math.round(h);
+    if (displayed >= 0) drawFrame(displayed, true);
+  }
+
+  var MAX_CROP = 0.22;
+  function paint(bm){
+    var cw = canvas.width, ch = canvas.height;
+    var sCover = Math.max(cw / bm.width, ch / bm.height);
+    var crop = 1 - Math.min(cw / (bm.width * sCover), ch / (bm.height * sCover));
+    var s = crop > MAX_CROP ? Math.min(cw / bm.width, ch / bm.height) : sCover;
+    var w = bm.width * s, h = bm.height * s;
+    if (s !== sCover){ ctx.fillStyle = "#05070B"; ctx.fillRect(0,0,cw,ch); }
+    ctx.drawImage(bm, (cw - w) / 2, (ch - h) / 2, w, h);
+  }
+
+  function nearestFrame(i){
+    if (bitmaps.has(i)) return bitmaps.get(i);
+    if (images[i] && images[i].complete && images[i].naturalWidth) return images[i];
+    for (var d = 1; d < 90; d++){
+      if (bitmaps.has(i - d)) return bitmaps.get(i - d);
+      if (bitmaps.has(i + d)) return bitmaps.get(i + d);
+      if (images[i - d] && images[i - d].naturalWidth) return images[i - d];
+      if (images[i + d] && images[i + d].naturalWidth) return images[i + d];
+    }
+    return null;
+  }
+
+  function drawFrame(i, force){
+    if (i === displayed && !force) return;
+    var bm = nearestFrame(i);
+    if (!bm) return;
+    paint(bm); displayed = i;
+  }
+
+  function ensureBitmaps(center){
+    if (Math.abs(center - bmpCenter) < 3) return;
+    bmpCenter = center;
+    var lo = Math.max(0, center - B_AHEAD), hi = Math.min(FRAME_COUNT - 1, center + B_AHEAD);
+    for (var i = lo; i <= hi; i++){
+      if (bitmaps.has(i) || decoding.has(i)) continue;
+      var im = images[i];
+      if (!im || !im.complete || !im.naturalWidth) continue;
+      decoding.add(i);
+      (function(idx){
+        createImageBitmap(images[idx]).then(function(b){
+          decoding.delete(idx);
+          if (Math.abs(idx - bmpCenter) > B_KEEP){ b.close(); return; }
+          bitmaps.set(idx, b);
+          if (idx === displayed) drawFrame(idx, true);
+        }).catch(function(){ decoding.delete(idx); });
+      })(i);
+    }
+    bitmaps.forEach(function(b, k){
+      if (k < center - B_KEEP || k > center + B_KEEP){ b.close(); bitmaps.delete(k); }
+    });
+  }
+
+  /* ---- concurrency-capped loading pump ---- */
+  var next = 0, inFlight = 0, PUMP = 12, PREFETCH = Math.min(60, FRAME_COUNT);
+  var started = false;
+  function pump(){
+    while (inFlight < PUMP && next < FRAME_COUNT){
+      (function(i){
+        next++; inFlight++;
+        var im = new Image();
+        im.decoding = "async";
+        im.onload = im.onerror = function(){
+          inFlight--; loadedCount++;
+          if (loadedCount <= PREFETCH){
+            var p = Math.min(100, Math.round(loadedCount / PREFETCH * 100));
+            barEl.style.width = p + "%";
+            pctEl.textContent = "Loading " + p + "%";
+          }
+          if (!started && loadedCount >= PREFETCH){ started = true; begin(); }
+          if (i === Math.round(currentFrame)) drawFrame(i, true);
+          pump();
+        };
+        im.src = src(i);
+        images[i] = im;
+      })(next);
+    }
+  }
+
+  function begin(){
+    loader.classList.add("done");
+    sizeCanvas();
+    ensureBitmaps(0);
+    drawFrame(0, true);
+    tick();
+  }
+
+  /* ---- progress + render loop ---- */
+  function computeProgress(){
+    var r = filmEl.getBoundingClientRect();
+    var span = r.height - innerHeight;
+    return span <= 0 ? 0 : Math.max(0, Math.min(1, -r.top / span));
+  }
+
+  function beatAlpha(b, p){
+    if (p < b.in || p > b.out) return 0;
+    if (p < b.peak) return (p - b.in) / Math.max(1e-4, b.peak - b.in);
+    if (b.out > 1.5) return 1;
+    return 1 - (p - b.peak) / Math.max(1e-4, b.out - b.peak);
+  }
+
+  /* adaptive header — average the drawn top strip, flip one class */
+  var probe = document.createElement("canvas");
+  probe.width = 16; probe.height = 4;
+  var pctx = probe.getContext("2d", { willReadFrequently:true });
+  var lastProbe = 0;
+  function probeLuma(now){
+    if (now - lastProbe < 180 || !canvas.width) return;
+    lastProbe = now;
+    try{
+      pctx.drawImage(canvas, 0, 0, canvas.width, Math.max(1, canvas.height * 0.16), 0, 0, 16, 4);
+      var d = pctx.getImageData(0, 0, 16, 4).data, sum = 0;
+      for (var i = 0; i < d.length; i += 4)
+        sum += 0.2126 * d[i] + 0.7152 * d[i+1] + 0.0722 * d[i+2];
+      var light = (sum / (d.length / 4)) > 138;
+      hdr.classList.toggle("on-light", light);
+      readout.classList.toggle("on-light", light);
+    } catch(e){ /* tainted canvas — leave chrome light */ }
+  }
+
+  var raf = 0;
+  function tick(now){
+    raf = requestAnimationFrame(tick);
+    progress = computeProgress();
+    targetFrame = progress * (FRAME_COUNT - 1);
+    currentFrame += (targetFrame - currentFrame) * 0.14;
+    if (Math.abs(targetFrame - currentFrame) < 0.02) currentFrame = targetFrame;
+    var idx = Math.round(currentFrame);
+    ensureBitmaps(idx);
+    drawFrame(idx);
+
+    for (var i = 0; i < beats.length; i++){
+      var b = beats[i], a = beatAlpha(b, progress);
+      if (Math.abs(a - b.a) > 0.004){
+        b.a = a;
+        b.el.style.opacity = a;
+        b.el.style.transform = (innerWidth > 720 ? "translateY(-50%) " : "") +
+          "translate3d(0," + ((1 - a) * 26) + "px,0)";
+        b.el.style.visibility = a < 0.01 ? "hidden" : "visible";
+      }
+    }
+
+    stageEl.style.setProperty("--vig", String(1 - Math.max(0, (progress - 0.9) / 0.1) * 0.8));
+    stageEl.style.setProperty("--seam-a", String(Math.max(0, (progress - 0.92) / 0.08)));
+
+    var name = CHAPTERS[0].name;
+    for (var c = 0; c < CHAPTERS.length; c++) if (progress >= CHAPTERS[c].at) name = CHAPTERS[c].name;
+    if (chLabel.textContent !== name) chLabel.textContent = name;
+    chBar.style.width = (progress * 100).toFixed(1) + "%";
+
+    probeLuma(now || 0);
+  }
+
+  if (reduced){
+    /* One representative frame, no scrubbing, no rAF. */
+    var still = new Image();
+    still.onload = function(){
+      sizeCanvas();
+      createImageBitmap(still).then(function(b){ paint(b); });
+      loader.classList.add("done");
+      beats.forEach(function(b){ b.el.style.opacity = 1; b.el.style.position = "static"; b.el.style.transform = "none"; });
+      document.getElementById("beats").style.position = "static";
+      ready();
+    };
+    still.onerror = function(){ loader.classList.add("done"); ready(); };
+    still.src = src(Math.floor(FRAME_COUNT * 0.62));
+  } else {
+    addEventListener("resize", sizeCanvas);
+    addEventListener("orientationchange", sizeCanvas);
+    sizeCanvas();
+    pump();
+    /* Never hang behind the loader if frames are missing entirely. */
+    setTimeout(function(){ if (!started){ started = true; begin(); } }, 6000);
+  }
+
+  /* ================= section arrival ================= */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { rootMargin:"0px 0px -12% 0px", threshold:0.12 });
+  document.querySelectorAll(".section").forEach(function(s){ io.observe(s); });
+
+  /* ================= form ================= */
+  var form = document.getElementById("lead");
+  var statusEl = document.getElementById("status");
+  var submitBtn = document.getElementById("submit");
+
+  /* Prefill from the email link: ?email=&fname=&lname=&company= — these people
+     are already known to us, so make them retype as little as possible. */
+  var qs = new URLSearchParams(location.search);
+  var PREFILL = { fname:"fname", lname:"lname", email:"email", company:"company", phone:"phone", role:"role" };
+  Object.keys(PREFILL).forEach(function(k){
+    var v = qs.get(k) || qs.get(PREFILL[k]);
+    if (v) { var el = document.getElementById(PREFILL[k]); if (el) el.value = v; }
+  });
+
+  function setErr(id, msg){
+    var el = document.getElementById(id);
+    var box = document.querySelector('.err[data-for="' + id + '"]');
+    if (el) el.setAttribute("aria-invalid", msg ? "true" : "false");
+    if (box){ box.textContent = msg || ""; box.classList.toggle("on", !!msg); }
+    return !msg;
+  }
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function validate(){
+    var ok = true;
+    ok = setErr("fname", document.getElementById("fname").value.trim() ? "" : "Required") && ok;
+    ok = setErr("lname", document.getElementById("lname").value.trim() ? "" : "Required") && ok;
+    var em = document.getElementById("email").value.trim();
+    ok = setErr("email", !em ? "Required" : (EMAIL_RE.test(em) ? "" : "That doesn't look like an email")) && ok;
+    ok = setErr("company", document.getElementById("company").value.trim() ? "" : "Required") && ok;
+    ok = setErr("locations", document.getElementById("locations").value ? "" : "Pick one") && ok;
+    return ok;
+  }
+
+  ["fname","lname","email","company","locations"].forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener("blur", function(){ if (el.getAttribute("aria-invalid") === "true") validate(); });
+    el.addEventListener("input", function(){ if (el.getAttribute("aria-invalid") === "true") validate(); });
+  });
+
+  function collect(){
+    var d = {};
+    new FormData(form).forEach(function(v, k){
+      if (d[k] === undefined) d[k] = v;
+      else if (Array.isArray(d[k])) d[k].push(v);
+      else d[k] = [d[k], v];
+    });
+    d.source = "retail-edge-booth-followup";
+    d.page = location.href;
+    d.submitted_at = new Date().toISOString();
+    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(function(u){
+      var v = qs.get(u); if (v) d[u] = v;
+    });
+    return d;
+  }
+
+  function succeed(){
+    document.getElementById("form-live").style.display = "none";
+    document.getElementById("thanks").classList.add("on");
+    document.getElementById("thanks").scrollIntoView({ behavior:reduced ? "auto" : "smooth", block:"center" });
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    statusEl.classList.remove("on");
+    if (!validate()){
+      var bad = form.querySelector('[aria-invalid="true"]');
+      if (bad){ bad.focus(); bad.scrollIntoView({ behavior:reduced ? "auto" : "smooth", block:"center" }); }
+      return;
+    }
+    var payload = collect();
+    if (!ENDPOINT){
+      /* Not wired up yet — prove the capture works rather than failing silently. */
+      console.info("[Retail Edge] lead captured (no ENDPOINT set):", payload);
+      succeed();
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+    var opts = { method:ENDPOINT_METHOD };
+    if (ENDPOINT_AS_JSON){
+      opts.headers = { "Content-Type":"application/json" };
+      opts.body = JSON.stringify(payload);
+    } else {
+      opts.body = new FormData(form);
+    }
+    fetch(ENDPOINT, opts).then(function(r){
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      succeed();
+    }).catch(function(err){
+      console.error("[Retail Edge] submit failed:", err);
+      statusEl.textContent = "That didn't go through. Please try again, or call 801-881-0011 and we'll take the details directly.";
+      statusEl.classList.add("on");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Start my design";
+    });
+  });
+
+  /* ================= dev contract ================= */
+  function ready(){
+    if (JUMP !== null){
+      scrollTo(0, +JUMP || 0);
+      progress = computeProgress();
+      currentFrame = targetFrame = progress * (FRAME_COUNT - 1);
+      ensureBitmaps(Math.round(currentFrame));
+      drawFrame(Math.round(currentFrame), true);
+      document.querySelectorAll(".section").forEach(function(s){ s.classList.add("in"); });
+      if (!reduced) tick(performance.now());
+    }
+    window.__ready = true;
+  }
+  if (reduced){ /* ready() called from the still handler */ }
+  else if (JUMP !== null){
+    /* Wait for the prefetch run so the jumped-to frame is real, not a fallback. */
+    var t0 = Date.now();
+    var iv = setInterval(function(){
+      if (started || Date.now() - t0 > 9000){ clearInterval(iv); setTimeout(ready, 350); }
+    }, 120);
+  } else {
+    addEventListener("load", function(){ setTimeout(ready, 120); });
+  }
+
+  /* jank meter — p95/max is the number that matters, never average fps */
+  if (location.search.indexOf("jank") > -1){
+    var last = performance.now(), deltas = [];
+    (function j(){
+      var n = performance.now(); deltas.push(n - last); last = n;
+      if (deltas.length >= 120){
+        deltas.sort(function(a,b){ return a-b; });
+        console.log("[jank] p95", deltas[113].toFixed(1) + "ms", "max", deltas[119].toFixed(1) + "ms");
+        deltas = [];
+      }
+      requestAnimationFrame(j);
+    })();
+  }
+})();
+</script>
+</body>
+</html>

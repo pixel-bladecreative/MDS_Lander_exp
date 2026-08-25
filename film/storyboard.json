@@ -1,0 +1,67 @@
+{
+  "name": "the-gap",
+  "aspect": "16:9",
+  "vector": "The camera only ever pushes forward \u2014 deeper into the lane, into the banner, and through it. It never once pulls back.",
+  "vector_direction": "in",
+  "style": "Cinematic photographic realism, big-box retail interior, anamorphic 40mm, shallow depth of field, subtle film grain, no text of any kind, no lettering, no signage copy, no brand logos, no watermarks, no people unless stated.",
+  "keyframes": [
+    {
+      "id": "kf1",
+      "prompt": "Eye-level view straight down the centre of a deserted big-box retail checkout lane after closing time. A stainless steel register counter runs along the left, a merchandise endcap along the right, and between them a clear open gap the width of a person. Beyond the gap the sales floor recedes into darkness. Cold blue-white overhead lighting, polished sealed-concrete floor with soft reflections, one warm pool of light spilling across the floor in the gap. Completely empty of people."
+    },
+    {
+      "id": "kf2",
+      "prompt": "The identical camera height and heading as the previous image, simply pushed forward down the same lane: the same deserted big-box checkout lane at night, the same stainless steel register counter running along the left, the same merchandise endcap along the right, and the same open gap between them now filling the middle of the frame. The same warm pool of light spills across the polished concrete inside the gap; the same dark sales floor recedes beyond it. Identical cold blue-white overhead lighting, identical night-time darkness, identical reflections on the floor. No people.",
+      "refs": []
+    },
+    {
+      "id": "kf3",
+      "prompt": "The identical night-time checkout lane from the identical camera height and heading, still dark, still lit only by the same cold blue-white overhead light and the same warm pool of light on the polished concrete. The open gap between the register counter and the endcap is now sealed: a slim matte-black aluminium post on a low half-round black steel base stands at each side of the opening, and stretched tight between them is a single TALL rectangular fabric banner reaching from waist height down toward the floor, spanning the full width of the gap like a solid panel. The banner face is deep navy with one crisp amber band across its top edge and is otherwise completely blank. Night time, dark, no daylight, no people.",
+      "refs": [
+        "hardware"
+      ]
+    },
+    {
+      "id": "kf4",
+      "prompt": "Extreme close view of the taut banner fabric filling the entire frame. Fine woven polyester texture, deep navy pigment, one crisp amber band crossing the upper area, faint sheen from the overhead store light, a single soft vertical fold catching light near the left edge. Completely blank fabric, no markings."
+    },
+    {
+      "id": "kf5",
+      "prompt": "A full-frame field of deep navy woven texture dissolving into pure saturated navy and warm amber light, the weave softening into smooth abstract glowing colour with a bright amber core near the centre. No objects, no surfaces, no markings."
+    },
+    {
+      "id": "kf6",
+      "prompt": "A bright sunlit big-box retail front-of-store viewed straight along the row of checkout lanes, the lanes receding in perspective. Every lane is sealed by a slim matte-black retractable barrier with a taut banner stretched across it. The further banners are deep navy with amber bands; the nearest banner in the foreground is completely blank matte white, clean and empty. Warm daylight flooding in from a glass storefront, polished concrete, no people, no markings on any surface.",
+      "refs": [
+        "hardware"
+      ]
+    }
+  ],
+  "clips": [
+    {
+      "id": "c1",
+      "duration": 5,
+      "prompt": "One unbroken forward push: the camera advances steadily straight down the centre of the checkout lane, moving closer and closer toward the open gap until the gap dominates the frame. Locked heading, constant dolly speed, no cuts, no scene changes."
+    },
+    {
+      "id": "c2",
+      "duration": 5,
+      "prompt": "Continuing the same forward push toward the gap at the same dolly speed, a taut fabric banner sweeps in from the left side and tensions horizontally across the opening, sealing it, while the camera keeps advancing closer to it. No cuts, no scene changes."
+    },
+    {
+      "id": "c3",
+      "duration": 5,
+      "prompt": "Continuing the same forward push at the same dolly speed, the camera advances straight into the face of the tensioned banner, closing on the fabric until the woven navy surface fills the entire frame. No cuts, no scene changes."
+    },
+    {
+      "id": "c4",
+      "duration": 5,
+      "prompt": "Continuing the same forward push, the camera moves deeper into the fabric surface itself until the weave softens and dissolves, leaving only saturated navy and warm amber light. No cuts, no scene changes."
+    },
+    {
+      "id": "c5",
+      "duration": 5,
+      "prompt": "Continuing the same forward push, the camera travels deeper through the field of navy and amber light and comes into a bright sunlit store, still advancing steadily down the row of sealed checkout lanes toward the blank white banner nearest the camera. No cuts, no scene changes."
+    }
+  ]
+}
