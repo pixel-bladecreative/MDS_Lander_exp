@@ -1,0 +1,48 @@
+name: Deploy preview to GitHub Pages
+
+# Publishes site/ — the deployable build, 24fps and both film formats. This is
+# the review link for the client; it is not the production destination.
+on:
+  push:
+    branches:
+      - claude/retail-edge-landing-page-qzdxaw
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it — a half-uploaded set of
+# 1,200 frames would leave the review link with holes in the film.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sanity-check the payload before publishing
+        run: |
+          test -f site/index.html || { echo "site/index.html missing"; exit 1; }
+          d=$(ls site/frames/f_*.jpg | wc -l)
+          m=$(ls site/frames-mobile/f_*.jpg | wc -l)
+          echo "desktop frames: $d   mobile frames: $m"
+          # The playhead maps 1:1 across the breakpoint swap, so a mismatch here
+          # would desynchronise the two films rather than fail loudly at runtime.
+          [ "$d" -eq "$m" ] || { echo "frame sets differ ($d vs $m)"; exit 1; }
+          grep -q "var FRAME_COUNT = $d;" site/index.html \
+            || { echo "FRAME_COUNT in index.html does not match $d extracted frames"; exit 1; }
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

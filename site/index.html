@@ -51,9 +51,33 @@ a{color:inherit}
   letter-spacing:.19em; text-transform:uppercase; margin:0;
 }
 
+/* ---------------- review banner ---------------- */
+/* Shown only while this is a draft. Dismissible, and the dismissal sticks, so it
+   never pollutes a screenshot the client wants to mark up. */
+.preview-bar{
+  position:fixed; top:0; left:0; right:0; z-index:95;
+  display:flex; align-items:center; justify-content:center;
+  gap:1rem clamp(.8rem,2vw,1.6rem); flex-wrap:wrap;
+  padding:.62rem clamp(.9rem,3vw,1.6rem);
+  background:var(--amber); color:#241703;
+  font-family:var(--accent); font-weight:800; font-size:.76rem;
+  letter-spacing:.01em; line-height:1.35; text-align:center;
+}
+.preview-bar b{font-weight:900; letter-spacing:.08em; text-transform:uppercase}
+.preview-bar button{
+  flex:none; cursor:pointer; font-family:var(--accent); font-weight:900;
+  font-size:.68rem; letter-spacing:.11em; text-transform:uppercase;
+  color:#241703; background:rgba(0,0,0,.13); border:0;
+  padding:.42rem .9rem; border-radius:100px;
+  transition:background .2s ease;
+}
+.preview-bar button:hover{background:rgba(0,0,0,.22)}
+.preview-bar button:focus-visible{outline:2px solid #241703; outline-offset:2px}
+.preview-bar[hidden]{display:none}
+
 /* ---------------- header ---------------- */
 .site-header{
-  position:fixed; inset:0 0 auto 0; z-index:70;
+  position:fixed; top:var(--pv-h,0px); left:0; right:0; z-index:70;
   display:flex; align-items:center; justify-content:space-between;
   gap:1.5rem; padding:1.15rem clamp(1rem,4vw,2.6rem);
   color:#fff; transition:color .45s ease;
@@ -458,6 +482,11 @@ footer{background:var(--ink); color:rgba(255,255,255,.62); padding:3.4rem 0 2.6r
 </head>
 <body>
 
+<div class="preview-bar" id="pvbar" hidden>
+  <span><b>Draft for review</b> &nbsp;The form validates and confirms, but is not yet connected &mdash; test entries are not sent anywhere.</span>
+  <button type="button" id="pvclose">Dismiss</button>
+</div>
+
 <header class="site-header" id="hdr">
   <a class="hd-mark" href="#top" aria-label="Retail Edge by MODUS">
     <img class="mk-light" src="assets/img/Retail_Edge_noTM.png" alt="Retail Edge">
@@ -823,6 +852,25 @@ var CHAPTERS = [
   { at:0.92, name:"Your store" }
 ];
 
+/* Review banner. Set PREVIEW_BANNER to false for the production deploy. */
+var PREVIEW_BANNER = true;
+(function(){
+  var bar = document.getElementById("pvbar");
+  var stored = false;
+  try { stored = localStorage.getItem("re-preview-dismissed") === "1"; } catch(e){}
+  if (!PREVIEW_BANNER || stored) return;
+  function sync(){
+    document.documentElement.style.setProperty("--pv-h", bar.offsetHeight + "px");
+  }
+  bar.hidden = false; sync();
+  addEventListener("resize", sync);
+  document.getElementById("pvclose").addEventListener("click", function(){
+    bar.hidden = true;
+    document.documentElement.style.setProperty("--pv-h", "0px");
+    try { localStorage.setItem("re-preview-dismissed", "1"); } catch(e){}
+  });
+})();
+
 (function(){
   "use strict";
   var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1022,8 +1070,12 @@ var CHAPTERS = [
     readout.classList.toggle("on-light", light);
   }
   function updateChrome(now){
+    /* Probe just under the header rather than at a fixed 70px — the review
+       banner shifts the header down and a hardcoded offset reads the wrong
+       element. */
+    var probeY = hdr.getBoundingClientRect().bottom + 6;
     var sr = stageEl.getBoundingClientRect();
-    if (sr.bottom > 70 && sr.top < 70){        // film is still behind the header
+    if (sr.bottom > probeY && sr.top < probeY){   // film is still behind the header
       hdr.classList.remove("docked");
       probeLuma(now);
       return;
@@ -1031,7 +1083,7 @@ var CHAPTERS = [
     hdr.classList.add("docked");
     for (var i = 0; i < chromeSections.length; i++){
       var r = chromeSections[i].getBoundingClientRect();
-      if (r.top <= 70 && r.bottom >= 70){
+      if (r.top <= probeY && r.bottom >= probeY){
         setChrome(chromeSections[i].getAttribute("data-chrome") === "light");
         return;
       }
