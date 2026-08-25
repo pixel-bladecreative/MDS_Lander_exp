@@ -862,9 +862,14 @@ var CHAPTERS = [
   function pad(n){ var s = String(n); while (s.length < 4) s = "0" + s; return s; }
   /* The artifact build inlines the film as data URIs; the deployable build
      streams numbered files. One engine, two payloads. */
+  function embeddedSet(){
+    if (!window.EMBEDDED_FRAMES) return null;
+    return (mqMobile.matches && window.EMBEDDED_FRAMES_MOBILE)
+      ? window.EMBEDDED_FRAMES_MOBILE : window.EMBEDDED_FRAMES;
+  }
   function src(i){
-    return window.EMBEDDED_FRAMES ? window.EMBEDDED_FRAMES[i]
-                                  : FRAME_DIR + "f_" + pad(i + 1) + FRAME_EXT;
+    var e = embeddedSet();
+    return e ? e[i] : FRAME_DIR + "f_" + pad(i + 1) + FRAME_EXT;
   }
 
   function sizeCanvas(){
@@ -1093,9 +1098,13 @@ var CHAPTERS = [
   }
 
   function swapFormat(){
-    var want = mqMobile.matches ? FRAME_DIR_MOBILE : FRAME_DIR_DESKTOP;
-    if (want === FRAME_DIR || window.EMBEDDED_FRAMES) return;
-    FRAME_DIR = want;
+    if (window.EMBEDDED_FRAMES){
+      if (!window.EMBEDDED_FRAMES_MOBILE) return;   // single embedded set
+    } else {
+      var want = mqMobile.matches ? FRAME_DIR_MOBILE : FRAME_DIR_DESKTOP;
+      if (want === FRAME_DIR) return;
+      FRAME_DIR = want;
+    }
     bitmaps.forEach(function(b){ b.close(); });   // decoded bitmaps belong to the
     bitmaps.clear(); decoding.clear();            // set we are leaving
     images = new Array(FRAME_COUNT);
