@@ -59,6 +59,26 @@ Any `utm_*` on the URL is captured into the payload automatically.
 
 ## Deploying
 
+### GitHub Pages (workflow is committed, needs one manual switch)
+
+`.github/workflows/pages.yml` publishes `site/` on every push to the working
+branch. It cannot turn Pages on by itself: creating a Pages site requires repo
+admin, and the Actions token never has that scope — `enablement: true` returns
+`Resource not accessible by integration`. One-time fix:
+
+**Settings → Pages → Build and deployment → Source → GitHub Actions**
+
+Then re-run the workflow (Actions tab → *Deploy preview to GitHub Pages* → Run
+workflow). It lands at:
+
+`https://pixel-bladecreative.github.io/MDS_Lander_exp/`
+
+The workflow refuses to publish if the two frame sets differ in length or if
+`FRAME_COUNT` disagrees with the frames on disk — both would desynchronise the
+film silently rather than failing loudly.
+
+### Any static host
+
 The page is static. Upload the contents of `site/` to any host:
 
 ```
@@ -81,6 +101,19 @@ destination and not something that should compete with madebymodus.com in search
 Remove it if that changes.
 
 ---
+
+## The review banner
+
+An amber bar at the top marks the page as a draft and says the form is not
+connected, so a reviewer does not submit a test entry and wonder where it went.
+It is dismissible and the dismissal persists in `localStorage`, so it stays out of
+any screenshot someone wants to mark up.
+
+Turn it off for production with one line at the top of the page script:
+
+```js
+var PREVIEW_BANNER = true;   // -> false
+```
 
 ## Why there are two films
 
