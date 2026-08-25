@@ -137,7 +137,7 @@ def main():
     out = sys.argv[2]
     limit = int(sys.argv[3]) if len(sys.argv) > 3 else len(sb["clips"])
     os.makedirs(out, exist_ok=True)
-    kfdir = os.path.join(os.path.dirname(out) or ".", "keyframes")
+    kfdir = os.environ.get("KF_DIR") or os.path.join(os.path.dirname(out) or ".", "keyframes")
     kf_urls = [open(os.path.join(kfdir, f"{k['id']}.url")).read().strip()
                for k in sb["keyframes"]]
 

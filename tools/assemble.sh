@@ -24,13 +24,23 @@ mapfile -t CLIPS < <(ls "$CLIPDIR"/[0-9][0-9]-*.mp4 2>/dev/null | sort)
 [ "${#CLIPS[@]}" -ge 2 ] || { echo "need >=2 clips in $CLIPDIR, found ${#CLIPS[@]}"; exit 1; }
 echo "assembling ${#CLIPS[@]} clips"
 
+# Seedance 2.5 sizes each pinned job independently under its "adaptive aspect
+# ratio" rule, so clips come back 1284 or 1286 wide from the same storyboard.
+# concat refuses mismatched links, so every branch is normalised to the first
+# clip's height and an even width before it reaches the filter.
+NORM_H=$(ffprobe -v error -select_streams v -show_entries stream=height -of csv=p=0 "${CLIPS[0]}")
+NORM_W=$(ffprobe -v error -select_streams v -show_entries stream=width -of csv=p=0 "${CLIPS[0]}")
+NORM_W=$(( (NORM_W / 2) * 2 ))
+echo "normalising all clips to ${NORM_W}x${NORM_H}"
+
 INPUTS=(); FILTER=""; CONCAT=""
 for i in "${!CLIPS[@]}"; do
   INPUTS+=(-i "${CLIPS[$i]}")
+  NORM="scale=${NORM_W}:${NORM_H}:flags=bicubic,setsar=1"
   if [ "$i" -eq 0 ]; then
-    FILTER+="[${i}:v]setpts=PTS-STARTPTS[v${i}];"
+    FILTER+="[${i}:v]${NORM},setpts=PTS-STARTPTS[v${i}];"
   else
-    FILTER+="[${i}:v]select='gte(n\\,1)',setpts=PTS-STARTPTS[v${i}];"
+    FILTER+="[${i}:v]select='gte(n\\,1)',${NORM},setpts=PTS-STARTPTS[v${i}];"
   fi
   CONCAT+="[v${i}]"
 done

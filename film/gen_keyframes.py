@@ -92,9 +92,17 @@ def main():
     style = sb.get("style", "")
 
     extra = {}
-    hw = os.path.join(os.path.dirname(outdir) or ".", "hardware-ref.url")
+    base = os.path.dirname(outdir) or "."
+    hw = os.path.join(base, "hardware-ref.url")
     if os.path.exists(hw):
         extra["hardware"] = open(hw).read().strip()
+    # Desktop keyframes are addressable as dkf1..dkfN so a second-format pass can
+    # inherit the established world instead of reinventing it.
+    dk = os.path.join(base, "keyframes")
+    if os.path.isdir(dk):
+        for f in os.listdir(dk):
+            if f.endswith(".url"):
+                extra["d" + f[:-4]] = open(os.path.join(dk, f)).read().strip()
 
     prev = None
     for k in sb["keyframes"]:

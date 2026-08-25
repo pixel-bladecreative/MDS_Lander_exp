@@ -29,7 +29,7 @@
   --mist:#CFCFCE;
   --paper:#F4F6F9;
   --white:#fff;
-  --seam:#C9D2DC;           /* set from the film's final-frame bottom strip */
+  --seam:#7E7769;          /* sampled from the final frame's bottom strip */
   --ease-out:cubic-bezier(.22,1,.36,1);
   --shell:min(1240px, 92vw);
   --display:'Readex Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
@@ -65,13 +65,25 @@ a{color:inherit}
 }
 .site-header.on-light{color:var(--navy)}
 .site-header.on-light::before{opacity:0}
-.hd-mark{display:flex; align-items:center; gap:.85rem; text-decoration:none}
-.hd-mark img{
-  height:26px; width:auto;
-  filter:drop-shadow(0 1px 10px rgba(0,0,0,.5));
-  transition:filter .45s ease;
+.site-header.docked{
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  transition:color .45s ease, background .45s ease, box-shadow .45s ease;
 }
-.site-header.on-light .hd-mark img{filter:none}
+.site-header.docked.on-light{
+  background:rgba(244,246,249,.92); box-shadow:0 1px 0 rgba(15,64,104,.12);
+}
+.site-header.docked:not(.on-light){
+  background:rgba(9,28,48,.9); box-shadow:0 1px 0 rgba(255,255,255,.08);
+}
+.site-header.docked::before{opacity:0}
+.hd-mark{position:relative; display:flex; align-items:center; text-decoration:none}
+.hd-mark img{height:26px; width:auto; transition:opacity .45s ease}
+.hd-mark .mk-light{filter:drop-shadow(0 1px 10px rgba(0,0,0,.5))}
+/* The mark is artwork, not text, so currentColor cannot flip it. Cross-fade a
+   navy copy instead — a white PNG is invisible against the bright end of the film. */
+.hd-mark .mk-dark{position:absolute; inset:0 auto 0 0; opacity:0}
+.site-header.on-light .mk-light{opacity:0}
+.site-header.on-light .mk-dark{opacity:1}
 .hd-right{display:flex; align-items:center; gap:1.4rem}
 .hd-tel{
   font-family:var(--accent); font-weight:800; font-size:.82rem;
@@ -448,7 +460,8 @@ footer{background:var(--ink); color:rgba(255,255,255,.62); padding:3.4rem 0 2.6r
 
 <header class="site-header" id="hdr">
   <a class="hd-mark" href="#top" aria-label="Retail Edge by MODUS">
-    <img src="assets/img/Retail_Edge_noTM.png" alt="Retail Edge">
+    <img class="mk-light" src="assets/img/Retail_Edge_noTM.png" alt="Retail Edge">
+    <img class="mk-dark" src="assets/img/Retail_Edge_navy.png" alt="" aria-hidden="true">
   </a>
   <div class="hd-right">
     <a class="hd-tel" href="tel:8018810011">801-881-0011</a>
@@ -465,32 +478,31 @@ footer{background:var(--ink); color:rgba(255,255,255,.62); padding:3.4rem 0 2.6r
       <div class="seam-fade"></div>
 
       <div class="beats" id="beats">
-        <div class="beat" data-in="-0.1" data-peak="0" data-out="0.13">
+        <div class="beat" data-in="-0.1" data-peak="0" data-out="0.11">
           <p class="eyebrow">Thank you for visiting us at our booth</p>
-          <img class="wordmark" src="assets/img/Retail_Edge_noTM.png" alt="Retail Edge">
           <h2>Where loss prevention meets advertising.</h2>
           <p class="sub">You already know how it feels in the hand. Here is what it does at 2am, in a store with nobody in it.</p>
         </div>
 
-        <div class="beat" data-in="0.15" data-peak="0.22" data-out="0.30">
+        <div class="beat" data-in="0.12" data-peak="0.17" data-out="0.25">
           <p class="eyebrow">The problem</p>
           <h2>An open lane is an open door.</h2>
           <p class="sub">Cones tip. Chains sag. Carts get pushed aside. The gap at the end of a closed register is the least defended metre of floor you own.</p>
         </div>
 
-        <div class="beat" data-in="0.38" data-peak="0.46" data-out="0.55">
+        <div class="beat" data-in="0.28" data-peak="0.35" data-out="0.45">
           <p class="eyebrow">The fix</p>
           <h2>One pull closes it.</h2>
           <p class="sub">Twelve feet of tensioned barrier out of a canister three inches across. A push-through latch keeps the fire marshal happy.</p>
         </div>
 
-        <div class="beat" data-in="0.60" data-peak="0.68" data-out="0.78">
+        <div class="beat" data-in="0.50" data-peak="0.60" data-out="0.76">
           <p class="eyebrow">The upside</p>
           <h2>Both faces print. Both faces sell.</h2>
           <p class="sub">Dual-sided, photo-quality, VOC-free fabric. The shopper you turned away still reads something worth reading.</p>
         </div>
 
-        <div class="beat" data-in="0.86" data-peak="0.94" data-out="2">
+        <div class="beat" data-in="0.918" data-peak="0.965" data-out="2">
           <p class="eyebrow">Your store</p>
           <h2>The blank one is yours.</h2>
           <p class="sub">Tell us the lane, the message and the store count. A specialist starts your artwork this week.</p>
@@ -512,7 +524,7 @@ footer{background:var(--ink); color:rgba(255,255,255,.62); padding:3.4rem 0 2.6r
   </section>
 
   <!-- ============ proof ============ -->
-  <section class="section" id="proof">
+  <section class="section" id="proof" data-chrome="light">
     <div class="wrap">
       <p class="eyebrow">Already on the floor</p>
       <h2>Walmart put it in front of the registers.</h2>
@@ -545,7 +557,7 @@ footer{background:var(--ink); color:rgba(255,255,255,.62); padding:3.4rem 0 2.6r
   </section>
 
   <!-- ============ lineup ============ -->
-  <section class="section" id="lineup">
+  <section class="section" id="lineup" data-chrome="dark">
     <div class="wrap">
       <p class="eyebrow">Four units, one system</p>
       <h2>Pick the one that fits your floor.</h2>
@@ -607,7 +619,7 @@ footer{background:var(--ink); color:rgba(255,255,255,.62); padding:3.4rem 0 2.6r
   </section>
 
   <!-- ============ process ============ -->
-  <section class="section" id="process">
+  <section class="section" id="process" data-chrome="light">
     <div class="wrap">
       <p class="eyebrow">From booth to floor</p>
       <h2>Your first banner, in three moves.</h2>
@@ -630,7 +642,7 @@ footer{background:var(--ink); color:rgba(255,255,255,.62); padding:3.4rem 0 2.6r
   </section>
 
   <!-- ============ form ============ -->
-  <section class="section" id="start">
+  <section class="section" id="start" data-chrome="dark">
     <div class="wrap">
       <div id="form-live">
         <div class="form-head">
@@ -772,7 +784,7 @@ footer{background:var(--ink); color:rgba(255,255,255,.62); padding:3.4rem 0 2.6r
   </section>
 </main>
 
-<footer>
+<footer data-chrome="dark">
   <div class="foot">
     <img src="assets/img/MODUS_Logo_WHT.png" alt="MODUS">
     <nav>
@@ -798,20 +810,28 @@ var ENDPOINT_METHOD = "POST";
 var ENDPOINT_AS_JSON = true;       // false => sends FormData instead
 
 /* ---------- film config ---------- */
-var FRAME_DIR   = "frames/";
-var FRAME_COUNT = 600;             // rewritten by tools/set-frames.sh after extraction
+var FRAME_DIR_DESKTOP = "frames/";
+var FRAME_DIR_MOBILE  = "frames-mobile/";   // a real 9:16 pass, not a crop
+var FRAME_DIR   = FRAME_DIR_DESKTOP;
+var FRAME_COUNT = 600;             // = frame count printed by tools/assemble.sh
 var FRAME_EXT   = ".jpg";
 var CHAPTERS = [
   { at:0.00, name:"Closed" },
-  { at:0.20, name:"The gap" },
-  { at:0.40, name:"Sealed" },
-  { at:0.62, name:"The surface" },
-  { at:0.84, name:"Your store" }
+  { at:0.12, name:"The gap" },
+  { at:0.28, name:"Sealed" },
+  { at:0.50, name:"The surface" },
+  { at:0.92, name:"Your store" }
 ];
 
 (function(){
   "use strict";
   var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Mobile is a different film, not a narrower one. A 16:9 film in a portrait
+     viewport either letterboxes to a strip or centre-crops away the subject —
+     and this film's payoff, the blank banner, sits in the left third. Both frame
+     sets are the same length, so the playhead maps 1:1 across the swap. */
+  var mqMobile = matchMedia("(max-width: 768px)");
+  FRAME_DIR = mqMobile.matches ? FRAME_DIR_MOBILE : FRAME_DIR_DESKTOP;
   var JUMP = new URLSearchParams(location.search).get("jump");
   if (JUMP !== null && "scrollRestoration" in history) history.scrollRestoration = "manual";
 
@@ -831,6 +851,7 @@ var CHAPTERS = [
     return { el:el, in:+el.dataset.in, peak:+el.dataset.peak, out:+el.dataset.out, a:-1 };
   });
 
+  if (window.EMBEDDED_FRAMES) FRAME_COUNT = window.EMBEDDED_FRAMES.length;
   var images = new Array(FRAME_COUNT);
   var bitmaps = new Map(), decoding = new Set();
   var loadedCount = 0, displayed = -1, bmpCenter = -999;
@@ -839,7 +860,12 @@ var CHAPTERS = [
   var B_AHEAD = 48, B_KEEP = 62;
 
   function pad(n){ var s = String(n); while (s.length < 4) s = "0" + s; return s; }
-  function src(i){ return FRAME_DIR + "f_" + pad(i + 1) + FRAME_EXT; }
+  /* The artifact build inlines the film as data URIs; the deployable build
+     streams numbered files. One engine, two payloads. */
+  function src(i){
+    return window.EMBEDDED_FRAMES ? window.EMBEDDED_FRAMES[i]
+                                  : FRAME_DIR + "f_" + pad(i + 1) + FRAME_EXT;
+  }
 
   function sizeCanvas(){
     /* DPR capped at 1 — sharpness on a scrub comes from the source matching the
@@ -902,29 +928,45 @@ var CHAPTERS = [
     });
   }
 
-  /* ---- concurrency-capped loading pump ---- */
-  var next = 0, inFlight = 0, PUMP = 12, PREFETCH = Math.min(60, FRAME_COUNT);
+  /* ---- playhead-priority loading pump ----
+     Loading strictly 0..N means a visitor who flicks to the end of the film
+     waits for the whole thing, and nearestFrame() shows them a frame from the
+     middle in the meantime. Requests go out nearest-to-the-playhead first, with
+     a sequential backfill so the rest of the film still lands. */
+  var seqNext = 0, inFlight = 0, PUMP = 12, PREFETCH = Math.min(60, FRAME_COUNT);
+  var requested = new Uint8Array(FRAME_COUNT);
   var started = false;
+
+  function requestFrame(i){
+    if (i < 0 || i >= FRAME_COUNT || requested[i] || inFlight >= PUMP) return;
+    requested[i] = 1; inFlight++;
+    var im = new Image();
+    im.decoding = "async";
+    im.onload = im.onerror = function(){
+      inFlight--; loadedCount++;
+      if (loadedCount <= PREFETCH){
+        var pc = Math.min(100, Math.round(loadedCount / PREFETCH * 100));
+        barEl.style.width = pc + "%";
+        pctEl.textContent = "Loading " + pc + "%";
+      }
+      if (!started && loadedCount >= PREFETCH){ started = true; begin(); }
+      if (i === Math.round(currentFrame)) drawFrame(i, true);
+      pump();
+    };
+    im.src = src(i);
+    images[i] = im;
+  }
+
   function pump(){
-    while (inFlight < PUMP && next < FRAME_COUNT){
-      (function(i){
-        next++; inFlight++;
-        var im = new Image();
-        im.decoding = "async";
-        im.onload = im.onerror = function(){
-          inFlight--; loadedCount++;
-          if (loadedCount <= PREFETCH){
-            var p = Math.min(100, Math.round(loadedCount / PREFETCH * 100));
-            barEl.style.width = p + "%";
-            pctEl.textContent = "Loading " + p + "%";
-          }
-          if (!started && loadedCount >= PREFETCH){ started = true; begin(); }
-          if (i === Math.round(currentFrame)) drawFrame(i, true);
-          pump();
-        };
-        im.src = src(i);
-        images[i] = im;
-      })(next);
+    var center = Math.round(currentFrame);
+    for (var d = 0; d < FRAME_COUNT && inFlight < PUMP; d++){
+      requestFrame(center + d);
+      if (d) requestFrame(center - d);
+    }
+    while (inFlight < PUMP && seqNext < FRAME_COUNT){
+      while (seqNext < FRAME_COUNT && requested[seqNext]) seqNext++;
+      if (seqNext >= FRAME_COUNT) break;
+      requestFrame(seqNext);
     }
   }
 
@@ -969,15 +1011,41 @@ var CHAPTERS = [
     } catch(e){ /* tainted canvas — leave chrome light */ }
   }
 
+  var chromeSections = [].slice.call(document.querySelectorAll("[data-chrome]"));
+  function setChrome(light){
+    hdr.classList.toggle("on-light", light);
+    readout.classList.toggle("on-light", light);
+  }
+  function updateChrome(now){
+    var sr = stageEl.getBoundingClientRect();
+    if (sr.bottom > 70 && sr.top < 70){        // film is still behind the header
+      hdr.classList.remove("docked");
+      probeLuma(now);
+      return;
+    }
+    hdr.classList.add("docked");
+    for (var i = 0; i < chromeSections.length; i++){
+      var r = chromeSections[i].getBoundingClientRect();
+      if (r.top <= 70 && r.bottom >= 70){
+        setChrome(chromeSections[i].getAttribute("data-chrome") === "light");
+        return;
+      }
+    }
+  }
+
   var raf = 0;
   function tick(now){
     raf = requestAnimationFrame(tick);
+    render(now);
+  }
+  function render(now){
     progress = computeProgress();
     targetFrame = progress * (FRAME_COUNT - 1);
     currentFrame += (targetFrame - currentFrame) * 0.14;
     if (Math.abs(targetFrame - currentFrame) < 0.02) currentFrame = targetFrame;
     var idx = Math.round(currentFrame);
     ensureBitmaps(idx);
+    if (inFlight < PUMP && loadedCount < FRAME_COUNT) pump();
     drawFrame(idx);
 
     for (var i = 0; i < beats.length; i++){
@@ -999,7 +1067,7 @@ var CHAPTERS = [
     if (chLabel.textContent !== name) chLabel.textContent = name;
     chBar.style.width = (progress * 100).toFixed(1) + "%";
 
-    probeLuma(now || 0);
+    updateChrome(now || 0);
   }
 
   if (reduced){
@@ -1023,6 +1091,21 @@ var CHAPTERS = [
     /* Never hang behind the loader if frames are missing entirely. */
     setTimeout(function(){ if (!started){ started = true; begin(); } }, 6000);
   }
+
+  function swapFormat(){
+    var want = mqMobile.matches ? FRAME_DIR_MOBILE : FRAME_DIR_DESKTOP;
+    if (want === FRAME_DIR || window.EMBEDDED_FRAMES) return;
+    FRAME_DIR = want;
+    bitmaps.forEach(function(b){ b.close(); });   // decoded bitmaps belong to the
+    bitmaps.clear(); decoding.clear();            // set we are leaving
+    images = new Array(FRAME_COUNT);
+    requested = new Uint8Array(FRAME_COUNT);
+    loadedCount = 0; seqNext = 0; inFlight = 0;
+    displayed = -1; bmpCenter = -999;
+    pump();                                        // refill so the canvas never blanks
+  }
+  if (mqMobile.addEventListener) mqMobile.addEventListener("change", swapFormat);
+  else if (mqMobile.addListener) mqMobile.addListener(swapFormat);
 
   /* ================= section arrival ================= */
   var io = new IntersectionObserver(function(es){
@@ -1135,11 +1218,14 @@ var CHAPTERS = [
     if (JUMP !== null){
       scrollTo(0, +JUMP || 0);
       progress = computeProgress();
+      /* Force-settle: skip the lerp entirely so a capture is of the frame the
+         scroll position actually maps to, not one the easing is still travelling
+         toward. Headless browsers throttle rAF hard, so waiting is not an option. */
       currentFrame = targetFrame = progress * (FRAME_COUNT - 1);
       ensureBitmaps(Math.round(currentFrame));
       drawFrame(Math.round(currentFrame), true);
       document.querySelectorAll(".section").forEach(function(s){ s.classList.add("in"); });
-      if (!reduced) tick(performance.now());
+      if (!reduced) render(performance.now());
     }
     window.__ready = true;
   }
@@ -1153,6 +1239,24 @@ var CHAPTERS = [
   } else {
     addEventListener("load", function(){ setTimeout(ready, 120); });
   }
+
+  /* Verification hook: lets a harness distinguish "the playhead is wrong" from
+     "the frame it wants has not downloaded yet". Read-only, a few bytes. */
+  window.__settle = function(){
+    progress = computeProgress();
+    currentFrame = targetFrame = progress * (FRAME_COUNT - 1);
+    ensureBitmaps(Math.round(currentFrame));
+    drawFrame(Math.round(currentFrame), true);
+    render(performance.now());
+    return Math.round(currentFrame);
+  };
+  window.__filmStats = function(){
+    return { frameCount:FRAME_COUNT, loaded:loadedCount, inFlight:inFlight,
+             requestedUpTo:seqNext, playhead:+currentFrame.toFixed(1),
+             displayed:displayed, target:+targetFrame.toFixed(1),
+             loadedAtPlayhead: !!(images[Math.round(currentFrame)] &&
+                                  images[Math.round(currentFrame)].naturalWidth) };
+  };
 
   /* jank meter — p95/max is the number that matters, never average fps */
   if (location.search.indexOf("jank") > -1){

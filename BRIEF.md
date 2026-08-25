@@ -103,3 +103,50 @@ Product video (47MB, 1080p) lives at
 - Do not narrate the page's own mechanic in copy ("as you scroll…") — `copy-gate.js` fails it.
 - Do not use `aspect_ratio` on pinned Seedance 2.5 calls.
 - Do not push to any branch except `claude/retail-edge-landing-page-qzdxaw`.
+
+---
+
+## Findings added during the build (2026-08-25)
+
+**Kie pricing, measured not estimated.**
+| Call | Cost |
+|---|---|
+| `nano-banana-2` still @ **2K** | **642 credits** |
+| `nano-banana-2` still @ **1K** | **8 credits** |
+| `bytedance/seedance-2-5` 5s @ 720p, both ends pinned | **315 credits** |
+
+2K stills cost 80x what 1K stills cost and buy nothing here — keyframes are only
+pin targets for 720p clips. Never generate keyframes above 1K for this pipeline.
+Iterate on stills, not on clips: at 8 credits a still is a free redo, and because
+every clip is pinned at BOTH ends the keyframes largely determine the clips.
+
+**Seedance 2.5 sizes each pinned job independently** under its adaptive-aspect
+rule — clips came back 1284 and 1286 wide from one storyboard. `concat` refuses
+mismatched links, so `tools/assemble.sh` normalises every branch first.
+
+**ffmpeg `-sseof -0.05` is not a safe last-frame extraction.** It is a ~1-frame
+window; depending on where the container's last keyframe falls ffmpeg exits 0
+having written nothing, and the chain breaks a step later. `extract_last()` uses
+a wide window with `-update 1` and verifies the file exists.
+
+**Headless Chromium throttles rAF to roughly 1fps.** The eased playhead advances
+about four steps in four seconds, so any screenshot taken by waiting is of a
+frame mid-easing. Every "the film is stuck" reading during this build came from
+that. `tools/shot.js` drives `window.__settle()` instead of waiting. Do not
+"fix" the film based on a capture that did not settle — check
+`__filmStats().playhead === .target` first.
+
+**This container:** no zsh, no xxd, no ffmpeg in apt (static build at `~/bin`).
+The skill's `assemble.sh` / `continuity-gate.sh` are zsh; ports live in `tools/`.
+
+**copy-gate scans raw markup**, so the literal string `placeholder=` in an HTML
+attribute trips its placeholder-marker rule. Fields use hint text under the
+label instead — better a11y anyway.
+
+## Film state
+- Desktop: 5 clips -> `film/clips/master.mp4` -> **600 frames @ 24fps, 1280w** in
+  `site/frames/`. Continuity gate PASS (median 0.7314, no cuts, no frozen pairs).
+  No head trim needed — frame 1 is already inside the move.
+- Mobile: a real 9:16 pass in `site/frames-mobile/`, same length so the playhead
+  maps 1:1. Keyframes chained from their desktop twins so the world matches.
+- Seam colour sampled from the final frame's bottom strip: **#7E7769**.

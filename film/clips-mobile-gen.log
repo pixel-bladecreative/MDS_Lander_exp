@@ -1,0 +1,4 @@
+[18:44:28] model=bytedance/seedance-2-5 res=720p  credits=6573.0
+[18:44:29] c1 kf1->kf2 5s  credits=6573.0
+[18:44:29]     task 48e1218e775e3206beae926387e3c828
+[18:45:42]     ...60s  state=waiting
