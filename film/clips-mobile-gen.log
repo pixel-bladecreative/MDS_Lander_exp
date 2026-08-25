@@ -2,3 +2,30 @@
 [18:44:29] c1 kf1->kf2 5s  credits=6573.0
 [18:44:29]     task 48e1218e775e3206beae926387e3c828
 [18:45:42]     ...60s  state=waiting
+[18:46:49] c1 done 6847KB  cost=315  credits=6258.0
+[18:46:50]     last frame uploaded -> next start pin
+[18:46:51] c2 kf2->kf3 5s  credits=6258.0
+[18:46:51]     task c9c664a9d39b0a7abba22a714626d6c3
+[18:48:04]     ...60s  state=waiting
+[18:49:07]     ...120s  state=waiting
+[18:50:10]     ...180s  state=waiting
+[18:50:43] c2 done 5020KB  cost=315  credits=5943.0
+[18:50:45]     last frame uploaded -> next start pin
+[18:50:45] c3 kf3->kf4 5s  credits=5943.0
+[18:50:45]     task b48bf4777818efbefccade3a137d9335
+[18:52:01]     ...60s  state=waiting
+[18:53:04]     ...120s  state=waiting
+[18:54:07]     ...180s  state=waiting
+[18:54:19] c3 done 6902KB  cost=315  credits=5628.0
+[18:54:20]     last frame uploaded -> next start pin
+[18:54:20] c4 kf4->kf5 5s  credits=5628.0
+[18:54:21]     task f65a2615d3a7190cdf6b4a8ff19b8482
+[18:55:34]     ...60s  state=waiting
+[18:56:39] c4 done 11464KB  cost=315  credits=5313.0
+[18:56:40]     last frame uploaded -> next start pin
+[18:56:41] c5 kf5->kf6 5s  credits=5313.0
+[18:56:41]     task ece4709f884686c58ccd763e7e2b6491
+[18:57:54]     ...60s  state=waiting
+[18:58:58]     ...120s  state=waiting
+[19:00:01]     ...180s  state=waiting
+[19:00:34] c5 done 6278KB  cost=315  credits=4998.0
