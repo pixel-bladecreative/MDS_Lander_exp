@@ -1,0 +1,10 @@
+# Lane B build intermediates — never commit raw renders
+film/clips/
+film/keyframes/
+film/frames/
+film/**/*.mp4
+film/**/*.task-id
+film/**/*.url
+*.tar.xz
+node_modules/
+.DS_Store
