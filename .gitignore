@@ -1,0 +1,18 @@
+# Customer data never goes in git.
+tools/data/
+*.db
+*.sqlite
+*.sqlite3
+
+# CRM exports
+*.csv
+*.tsv
+!**/sample_*.csv
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.venv/
+__pycache__/
+*.pyc

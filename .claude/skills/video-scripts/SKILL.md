@@ -41,15 +41,15 @@ Local content has almost no competition and converts far better than generic
 car content, because the audience is people who can actually walk into his
 store. Start here:
 
-1. **"Why your car feels slow in Colorado Springs"** — the altitude explainer.
-   ~18% power loss for naturally aspirated at 6,000 ft, near zero for turbo.
-   True, useful, and it establishes real expertise. **Make this one first.**
-2. **"PCSing to Fort Carson? Watch this before you buy a car."** — enormous
-   local audience, recurring, essentially zero competition.
-3. **"Best Mazda for a Colorado winter"** — standard AWD, real snow.
-4. **"Monument Hill test"** — a grade every local knows.
-5. **"Turbo vs. naturally aspirated at altitude"** — the shopper-intent version
-   of #1.
+1. **"PCSing to Fort Carson? Watch this before you buy a car."** — enormous
+   local audience, renews every posting cycle, essentially zero competition.
+   **Make this one first.**
+2. **"What the military discount actually stacks with"** — most people assume
+   it replaces other offers. It does not.
+3. **"Deploying? Here's what to do with your car and your loan."** — SCRA,
+   storage, insurance. Nobody in this market has made it.
+4. **"Best Mazda for a Colorado winter"** — standard AWD, real snow.
+5. **CX-5 vs CX-50** — same size, constantly confused, high search volume.
 
 See `reference/colorado-springs-market.md` for the full angle list.
 
@@ -66,7 +66,7 @@ See `reference/colorado-springs-market.md` for the full angle list.
 **The hook is 80% of it.** If the first two seconds do not stop a thumb,
 nothing else in the video happens.
 
-Bad hook: "Hey guys, [NAME] here at Bob Penkhus Mazda, today I wanted to talk
+Bad hook: "Hey guys, Holden here at Bob Penkhus Mazda, today I wanted to talk
 about..."
 
 Good hooks:
@@ -107,7 +107,7 @@ Different animal entirely. Not content — a sales tool.
 sound unrehearsed, which is the whole point.
 
 ```
-1. Say their name in the first three seconds. "Hey Dana — it's [NAME]."
+1. Say their name in the first three seconds. "Hey Dana — it's Holden."
 2. Walk to the actual car. Show the stock tag or plate so it's provably real.
 3. Answer the specific thing they asked about. Only that thing.
 4. Point out one honest flaw. A scuff, the cargo number, whatever's true.
@@ -138,6 +138,6 @@ Revisit if custom-trained avatar quality clearly closes the gap. Not yet.
 
 ## Reference
 
-- `reference/colorado-springs-market.md` — local angles, altitude, military
+- `reference/colorado-springs-market.md` — local angles, military market
 - `reference/mazda-lineup-2026.md` — product facts, honest weaknesses
 - `reference/compliance.md` — payment disclosure, customer privacy, AI labeling

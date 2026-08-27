@@ -9,9 +9,28 @@ The goal is that he walks in with a plan instead of a list. Twelve names sorted
 by close probability, each with the first sentence already written, beats two
 hundred names in a CRM he will not open.
 
-**This works entirely off pasted data.** He copies whatever he can see — a CRM
-view, a lead list, tomorrow's service appointments — and pastes it in. No
-integration, no access request, no IT ticket.
+## Two ways in
+
+**On the rig (preferred) — use `book.py`.** Holden's book of business lives in
+`tools/book.py`. Run it and read the output rather than asking him to paste
+anything:
+
+```bash
+python3 tools/book.py brief --limit 12    # ranked, consent-flagged
+python3 tools/book.py due --days 30       # who's gone cold
+python3 tools/book.py stats               # response time, pipeline
+```
+
+The tool already does the ranking described below and flags consent per person.
+**Your job is then the part it cannot do: write the opener for each name.**
+Do not re-rank its output — extend it.
+
+If the book looks empty or stale, tell him to import a fresh CRM export first:
+`python3 tools/book.py import <export.csv>`
+
+**Anywhere else — take pasted data.** On a phone, or when he only has a
+screenshot's worth of text, accept whatever he gives you and do the ranking
+yourself using the tiers below.
 
 ---
 
@@ -51,14 +70,14 @@ Not a template with a name merged in. **One specific reason this person, today.*
 > **Dana Whitfield** — 2021 CX-5 Touring, 47k mi · service Thu 9:00 AM ·
 > ~$3,400 positive equity
 > *In the lounge for two hours Thursday. Go say hello around 9:15.*
-> "Dana? I'm [NAME] — I don't want to interrupt your morning, but while you're
+> "Dana? I'm Holden — I don't want to interrupt your morning, but while you're
 > waiting: your CX-5 is worth more right now than what you owe, which doesn't
 > happen often. Want me to run what a new one looks like? Takes ten minutes and
 > you're sitting here anyway."
 
 > **SFC Marcus Bell** — 2022 CX-9, lease matures 11/14 · Fort Carson
 > *Lease ends in 79 days. Call, don't text — no consent on file.*
-> "Sergeant Bell, [NAME] at Penkhus. Your lease is up in November and I wanted
+> "Sergeant Bell, Holden at Penkhus. Your lease is up in November and I wanted
 > you to hear the options from me before the mailers start. Also — the military
 > $500 stacks with what's on the CX-90 right now. Two minutes?"
 
@@ -104,7 +123,8 @@ Once a week, ask for a wider pull and produce a themed batch instead:
 
 ## Reference
 
+- `tools/README.md` — the book, its commands, and its privacy rules
 - `reference/compliance.md` — consent rules before any outreach
 - `reference/mazda-lineup-2026.md` — current incentives to reference in openers
-- `reference/colorado-springs-market.md` — military eligibility, altitude angle
+- `reference/colorado-springs-market.md` — military eligibility, local angles
 - `reference/objections.md` — when the call goes past hello

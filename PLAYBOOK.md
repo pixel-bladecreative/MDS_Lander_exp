@@ -38,8 +38,9 @@ You do not need a tool for this. You need notifications on and a decision.
   even standing with another customer. "Give me ten seconds" is an acceptable
   thing to say to the person in front of you.
 - Use `lead-response` from your phone. Ninety seconds, not twenty minutes.
-- **Track it.** Note the timestamp gap on every lead for two weeks. You cannot
-  improve what you are not looking at.
+- **Track it.** `book.py lead <id>` when one arrives, `--respond` when you
+  reply. `book.py stats` shows your median and your percentage under five
+  minutes. You cannot improve what you are not looking at.
 
 This single change, done consistently, will outperform everything else on this
 page combined. It costs nothing.
@@ -62,10 +63,18 @@ Do this every day for fourteen days.
 
 You can see equity and lease maturity in the CRM. Most people never look.
 
-- Pull everyone with positive equity. Pull every lease maturing in 120 days.
-- Run `daily-brief` for a ranked list with openers written.
-- **Check consent before texting anyone.** No consent means call. Calling
-  converts better on these conversations anyway.
+- Export everyone with positive equity and every lease maturing in 120 days.
+- Import it once: `python3 tools/book.py import <export.csv>`
+- `python3 tools/book.py brief` ranks them by close probability and flags
+  consent per person. Then ask Claude to write the openers.
+- **Check consent before texting anyone.** The tool flags it; respect the flag.
+  No consent means call — and calling converts better on these conversations
+  anyway.
+
+Re-export and re-import whenever you want; it updates people instead of
+duplicating them. Read the privacy section in `tools/README.md` before the
+first import, and confirm with your GM what you're permitted to take
+off-system.
 
 Equity leads close at 15–22% against 3–7% for internet leads. This is the
 highest-conversion prospecting that exists and it is sitting in a system you
@@ -106,14 +115,13 @@ This is a compounding asset that costs one sentence per delivery.
 
 Two hours. Ten videos. One setup.
 
-Use `video-scripts` to generate a batch. **Lead with the altitude video** —
-"Why your car feels slow in Colorado Springs."
+Use `video-scripts` to generate a batch. **Lead with "PCSing to Fort Carson?
+Watch this before you buy a car."**
 
-That video works because it is true, immediately useful, locally specific, and
-nobody else is making it. Naturally aspirated engines lose roughly 18–20% of
-their power at 6,000 feet. Turbos lose almost none. That is the CX-90's turbo
-inline-six against a naturally aspirated Telluride V6 — and it is the Monument
-Hill grade with a family and gear in the back, not a spec sheet argument.
+That video works because the audience is enormous here, it renews itself every
+posting cycle, the intent is about as high as it gets, and essentially nobody
+is making it. Everyone else in this market is posting inventory walkarounds
+that get no distribution.
 
 Post one a day for the next two weeks. Do not evaluate results before day 14.
 

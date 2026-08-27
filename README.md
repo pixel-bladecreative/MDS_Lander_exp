@@ -32,12 +32,27 @@ business you own rather than waiting on the rotation.
 | **video-scripts** | Batch content for TikTok/Reels/Shorts, plus 1:1 customer videos. |
 | **daily-brief** | Turns a pasted CRM view into a ranked plan with openers written. |
 
+### Tooling — `tools/`
+
+**`book.py`** — Holden's book of business. Imports CRM exports, ranks who to
+work today by close probability, tracks follow-up cadence, and measures
+response time against the 5-minute window. Python stdlib only, nothing to
+install, all data local. See [`tools/README.md`](tools/README.md).
+
+```bash
+python3 tools/book.py import ~/Downloads/crm_export.csv
+python3 tools/book.py brief
+```
+
+It refuses to store SSNs, dates of birth, credit scores, and account numbers.
+`tools/data/` is gitignored. Read the privacy section before the first import.
+
 ### Reference — `reference/`
 
 | File | Contains |
 |---|---|
 | **mazda-lineup-2026.md** | The lineup, honest strengths and weaknesses, current incentive snapshot |
-| **colorado-springs-market.md** | The altitude argument, the military market, local content angles, competitive set |
+| **colorado-springs-market.md** | The Fort Carson military market, local content angles, competitive set |
 | **objections.md** | What objections actually mean and what to say |
 | **compliance.md** | TCPA, advertising claims, customer privacy. Read this once. |
 
@@ -45,11 +60,22 @@ business you own rather than waiting on the rotation.
 
 ## Setup
 
-**On a phone (where you'll mostly use it):** create a Project in the Claude app,
-add the four `reference/` files as project knowledge, then use the prompts in
-`PHONE-KIT.md`.
+**On the rig (primary).** Clone the repo and run Claude Code in it — the skills
+load automatically and Claude can run `book.py` directly. Needs Python 3.8+.
 
-**In Claude Code:** clone the repo and the skills load automatically.
+```bash
+git clone <this repo>
+cd MDS_Lander_exp
+python3 tools/book.py import ~/Downloads/crm_export.csv
+```
+
+Then just talk to it: *"Run the brief and write me an opener for each of the
+top five."*
+
+**On a phone (on the floor).** Create a Project in the Claude app, add the four
+`reference/` files as project knowledge, and use the prompts in
+[`PHONE-KIT.md`](PHONE-KIT.md). No `book.py` there — the phone is for drafting
+responses fast, the rig is for planning.
 
 ---
 

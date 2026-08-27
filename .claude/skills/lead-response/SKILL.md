@@ -64,7 +64,7 @@ This is the whole thing. Generic dealership copy is why nobody replies.
 > find your perfect vehicle. When would be a good time to discuss your needs?"
 
 **Write:**
-> "Hi Dana — [NAME] at Bob Penkhus Mazda. Saw you were looking at the CX-5
+> "Hi Dana — Holden at Bob Penkhus Mazda. Saw you were looking at the CX-5
 > Preferred. It's here and I can have it out front. Are you closer to a
 > weekday evening or Saturday morning?"
 
@@ -99,7 +99,7 @@ Nothing else. They are standing on a lot with a customer walking up.
 Different problem. They ignored somebody already, so a cheerful check-in reads
 as more of the same. What works is honesty and zero pressure:
 
-> "Hey Dana — [NAME] at Penkhus. No pitch. Just making sure you landed
+> "Hey Dana — Holden at Penkhus. No pitch. Just making sure you landed
 > somewhere good. If you already bought, genuinely congrats — what'd you get?
 > If you're still looking, I'm here."
 
@@ -122,4 +122,4 @@ their question.
 - `reference/compliance.md` — the consent rules in full
 - `reference/objections.md` — if their message contains an objection
 - `reference/mazda-lineup-2026.md` — product facts, current incentives
-- `reference/colorado-springs-market.md` — altitude and military angles
+- `reference/colorado-springs-market.md` — military market, local angles

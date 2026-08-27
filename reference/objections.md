@@ -70,7 +70,7 @@ Do not oversell:
 ### "I'm just looking."
 *Translation: don't pounce on me.*
 
-> "Good — you should be. I'm not going to follow you around. I'm [NAME], the keys
+> "Good — you should be. I'm not going to follow you around. I'm Holden, the keys
 > are inside if you want to drive anything, and if you'd rather just wander,
 > that's completely fine."
 

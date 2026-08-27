@@ -6,11 +6,15 @@ something in the next ninety seconds.
 
 **Set this up once:** create a Project in the Claude app called "Mazda," and add
 the four `reference/` files to its project knowledge. Then Claude already knows
-the lineup, the incentives, the altitude argument, the military programs, and
+the lineup, the incentives, the military programs, and
 the compliance rules — and these prompts get much shorter and much better.
 
 If you have the skills installed, just say what you need in plain language and
 the right one loads. These are the fallback.
+
+**Division of labor:** the rig is for planning — `book.py`, the daily brief,
+batch content, digging through the book. The phone is for the four minutes
+after a lead lands. Do not try to do rig work here.
 
 ---
 
@@ -26,7 +30,7 @@ What they said:
 Consent on file: yes / no / unknown
 
 Under 40 words, sounds like a person, one question, offer two specific times.
-Sign it [YOUR NAME]. If consent is unknown or no, tell me to call instead.
+Sign it Holden. If consent is unknown or no, tell me to call instead.
 ```
 
 ## They asked what the payment would be
@@ -51,8 +55,7 @@ one actually wins. Estimates only — I'll confirm with the desk.
 ```
 Customer is cross-shopping [VEHICLE] against our [MAZDA].
 Give me the three honest advantages and the one place we genuinely lose,
-plus how to handle that one. Include the altitude argument only if it
-actually helps here.
+plus how to handle that one. Skip anything a Colorado gearhead already knows.
 ```
 
 ## They hit me with an objection
@@ -66,7 +69,7 @@ standing in front of them.
 ## Walking out to shoot a video for someone
 
 ```
-Shooting a 1:1 video for [NAME] about the [VEHICLE].
+Shooting a 1:1 video for Holden about the [VEHICLE].
 They asked about [THING].
 Give me 5 bullets, not a script. Include one honest flaw to point out.
 ```

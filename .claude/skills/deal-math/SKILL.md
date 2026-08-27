@@ -69,10 +69,9 @@ genuinely wins and you should say so.
 is how customers get pushed into 84-month terms they regret, and how you lose
 their next three cars.
 
-## Step 4 — Total cost, including gas at altitude
+## Step 4 — Total cost, including fuel
 
-Colorado Springs gas prices and the CX-5's 26 mpg mean the fuel objection is
-real. Build the honest comparison:
+The CX-5's 26 mpg against hybrid rivals makes the fuel objection real. Build the honest comparison:
 
 ```
 Annual fuel · 12,000 mi/yr · $3.50/gal
@@ -115,4 +114,4 @@ Always end with:
 
 - `reference/mazda-lineup-2026.md` — incentive snapshot, pricing, mpg
 - `reference/compliance.md` — advertising rules on payment claims
-- `reference/colorado-springs-market.md` — military eligibility, local fuel math
+- `reference/colorado-springs-market.md` — military eligibility, local market
