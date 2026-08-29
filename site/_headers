@@ -1,0 +1,14 @@
+# Frames and assets are content-addressed by their path and never change once
+# published, so they can be cached hard. index.html must not be, or a copy
+# change never reaches anyone.
+/frames/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/frames-mobile/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
