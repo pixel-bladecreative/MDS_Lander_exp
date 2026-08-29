@@ -1,0 +1,10 @@
+# Build intermediates — regenerable, large, and never served.
+film/keyframes/
+film/keyframes-mobile/
+film/clips/
+film/clips-mobile/
+film/*.url
+*.mp4
+*.webm
+node_modules/
+shots/

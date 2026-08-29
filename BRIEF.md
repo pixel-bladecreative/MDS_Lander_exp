@@ -215,6 +215,78 @@ shell with no metadata, so no media or captions can be pulled. Real footage and
 stills of Chaz, Kristy and the mobile van need to be downloaded and dropped into
 `site/assets/img/` (or Drive) before they can be used.
 
+## COPY TONE — match their site, at a third the length
+
+Spencer, 2026-08-29: *"the existing copy is so clipped it feels less casual, and
+more 'marketing boot camp' austere."* Correct, and measurable. Their real body
+copy (364 sentences scraped from onusiv.com) against the Netlify prototype:
+
+| Trait | onusiv.com | prototype | target |
+|---|---|---|---|
+| mean sentence length | **13.5 words** | 7.7 | ~11–13 |
+| addresses "you / your" | 28.8% | 21.4% | keep high |
+| asks the reader a question | **22.5%** | **0%** | bring it back |
+| exclamation | 8.2% | 0% | sparing, not zero |
+| "+" used for "and" | 4.1% | 0% | use it, it is theirs |
+| em/en-dash aside | 6.0% | — | yes |
+| Colorado / outdoor metaphor | 6.3% | 7.1% | fine as is |
+
+The prototype's staccato — *"The lot. The lobby. The clipboard. The wait."* — is
+the failure mode. Three-word fragments stacked for rhythm read as an agency
+flexing, not as Onus talking.
+
+**Their actual cadence, for reference:**
+- "Take Onus of your health + wellbeing"
+- "Click below to get started—your best days are still ahead!"
+- "Save on your first visit + choose from one of our new client offers – see what
+  the buzz is all about."
+- "Low energy, mood changes, or a decreased sex drive? You're not broken — our
+  BHRT specialists help support hormonal balance and overall well-being."
+- "Get out there. Climb your mountains. Conquer your fears."
+- "Gearing up for a wedding night and need a boost of hydration so your crew can
+  stay up well past midnight dancing the night away?"
+
+**Rules for this page.** Warm, second person, a little playful, encouraging.
+Ask the reader a question where it is natural. Use "+" for "and" at least once
+or twice. Allow one or two exclamations across the whole page — no more. Keep
+their sign-offs (#yourbestdays, "your best days are still ahead"). Do **not**
+write in three-word fragments. Their site is verbose and we must cut it hard —
+but cut *length*, never *warmth*.
+
+## CREDENTIAL WORDING — locked
+
+Use "**ER-certified team**". Do **not** write "registered nurses" or "RN".
+In-clinic staff are RNs today, but the mobile crew composition can change with
+staffing, and "ER-certified" holds through that. This is Spencer's call, made
+2026-08-29, and it is deliberate margin — do not "upgrade" it later.
+
+## FILM — locked concept: THE DESCENT
+
+Client approved the cloud → Denver → van journey. **The vector is a descent,
+not a climb** (the earlier ALTITUDE pitch had the camera rising; it does not).
+
+> The camera only ever descends — down through the cloud deck, down over the
+> Front Range, down into a Denver street, down to the van waiting at the curb.
+
+6 keyframes, 5 clips x 5s = 25s. `film/storyboard.json` **PASSES vector-check**.
+kf5/kf6 are seeded with their real van photograph via `film/hardware-ref.url`
+so the generated vehicle carries their black-and-green livery.
+
+The **lounge-to-van thread is deferred** — it becomes a later section on the
+page (green cords, topo wall, the clinic experience carried outward), not part
+of the film.
+
+### Film content rules learned from the prototype
+- **No manufacturer badges.** The prototype's van shows a Mercedes three-pointed
+  star. Every van keyframe prompt keeps the grille turned away and forbids
+  badges, emblems and lettering.
+- **No people in generated frames.** Faces drift across clips. People come from
+  their real photography only.
+- **No global colour grade over photography.** The prototype interpolated every
+  image toward `#83F214` on scroll ("the rehydration grade"), which pushed the
+  page to a measured +16 green bias by the footer. Lime is an accent on
+  near-black. It never touches a photograph.
+
 ## Do-nots
 
 - Do not commit `film/clips/`, `film/keyframes/`, or any raw mp4. Runtime `frames/` only.
