@@ -181,8 +181,9 @@ a{color:inherit}
   grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr));
   border:1px solid var(--hair-2);margin-top:3.2rem}
 .step{background:var(--canvas);padding:2.4rem 2rem 2.6rem;position:relative}
-.step b{display:block;font-family:var(--display);font-size:3.4rem;line-height:1;
-  color:var(--lime);opacity:.32;margin-bottom:1.1rem}
+.step b{display:block;font-family:var(--display);font-size:3.1rem;line-height:1;
+  color:var(--lime);margin-bottom:1.1rem;padding-bottom:1.05rem;
+  border-bottom:1px solid var(--hair-2);letter-spacing:.02em}
 .step h3{font-family:var(--body);font-weight:500;font-size:1.16rem;margin:0 0 .7rem;
   letter-spacing:-.01em}
 .step p{margin:0;color:var(--ink-soft);font-size:.98rem}
@@ -242,9 +243,18 @@ a{color:inherit}
 
 /* — form — */
 #book{background:linear-gradient(180deg,var(--canvas),var(--surface) 120%)}
-form{margin-top:3rem;display:grid;gap:1.15rem;
-  grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr))}
+form{margin-top:3rem;display:grid;gap:1.35rem 1.5rem;max-width:860px;
+  grid-template-columns:1fr 1fr}
 .f-wide{grid-column:1/-1}
+.f-third{grid-column:span 1}
+@media(min-width:760px){form{grid-template-columns:repeat(3,1fr)}
+  .f-half{grid-column:span 3}}
+@media(max-width:600px){form{grid-template-columns:1fr}}
+/* A field is a column with the input pinned to the bottom, so a one-line
+   label and a two-line label still leave their inputs on the same baseline. */
+.fld{display:flex;flex-direction:column}
+.fld label{flex:1 0 auto;margin-bottom:.55rem}
+label em{display:block;margin-top:.28rem;font-size:.78rem;line-height:1.35}
 label{display:block;font-family:var(--tech);font-size:.64rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink-soft);margin-bottom:.5rem}
 label em{font-style:normal;color:var(--ink-dim);text-transform:none;letter-spacing:0;
@@ -450,24 +460,24 @@ footer img{height:24px;margin-bottom:1rem;opacity:.9}
     <p class="lede" style="margin-top:1.4rem">Give us the date, your zip and a rough headcount, and we'll come back to you with a plan and a price. Your best days are still ahead!</p>
 
     <form id="req" novalidate>
-      <div><label for="fn">First name</label><input id="fn" name="first_name" autocomplete="given-name" required></div>
-      <div><label for="ln">Last name</label><input id="ln" name="last_name" autocomplete="family-name" required></div>
-      <div><label for="em">Email</label><input id="em" name="email" type="email" autocomplete="email" required></div>
-      <div><label for="ph">Phone</label><input id="ph" name="phone" type="tel" autocomplete="tel" required></div>
-      <div><label for="dt">Date you have in mind</label><input id="dt" name="event_date" type="date"></div>
-      <div><label for="zp">Zip code<em>Where should we park?</em></label><input id="zp" name="zip" inputmode="numeric" maxlength="10" required></div>
-      <div><label for="ppl">How many people<em>Four is our minimum</em></label>
+      <div class="fld"><label for="fn">First name</label><input id="fn" name="first_name" autocomplete="given-name" required></div>
+      <div class="fld"><label for="ln">Last name</label><input id="ln" name="last_name" autocomplete="family-name" required></div>
+      <div class="fld"><label for="em">Email</label><input id="em" name="email" type="email" autocomplete="email" required></div>
+      <div class="fld"><label for="ph">Phone</label><input id="ph" name="phone" type="tel" autocomplete="tel" required></div>
+      <div class="fld"><label for="dt">Date you have in mind</label><input id="dt" name="event_date" type="date"></div>
+      <div class="fld"><label for="zp">Zip code<em>Where should we park?</em></label><input id="zp" name="zip" inputmode="numeric" maxlength="10" required></div>
+      <div class="fld"><label for="ppl">How many people<em>Four is our minimum</em></label>
         <select id="ppl" name="group_size" required>
           <option value="">Choose one</option><option>4–6</option><option>7–10</option>
           <option>11–20</option><option>21–40</option><option>40+</option>
         </select></div>
-      <div><label for="occ">What's the occasion?</label>
+      <div class="fld"><label for="occ">What's the occasion?</label>
         <select id="occ" name="occasion">
           <option value="">Choose one</option><option>Wedding</option>
           <option>Bachelor or bachelorette</option><option>Corporate or team</option>
           <option>Ski or race weekend</option><option>Family</option><option>Something else</option>
         </select></div>
-      <div class="f-wide"><label for="msg">Anything we should know?</label><textarea id="msg" name="message"></textarea></div>
+      <div class="fld f-wide"><label for="msg">Anything we should know?</label><textarea id="msg" name="message"></textarea></div>
       <div class="f-wide consent">
         <input id="ok" name="consent" type="checkbox" required>
         <label for="ok" style="font-family:var(--body);font-size:.9rem;letter-spacing:0;text-transform:none;color:var(--ink-soft);margin:0">
