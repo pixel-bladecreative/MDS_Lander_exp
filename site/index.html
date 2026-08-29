@@ -651,9 +651,20 @@ function nearest(i){
 }
 
 function ensureBitmaps(center){
-  if (Math.abs(center - bmpCenter) < 3) return;
-  bmpCenter = center;
   var lo = Math.max(0, center - 18), hi = Math.min(FRAME_COUNT-1, center + B_AHEAD);
+  /* "The playhead barely moved, so there is nothing to do" is wrong straight
+     after a breakpoint swap: the centre gets set while the new frame set is
+     still downloading, nothing is decodable yet, and every later call then
+     early-returns against a starved window — leaving the canvas on the
+     synchronous-decode fallback for as long as the visitor holds still.
+     So while stationary, only skip once the window holds everything the
+     loaded frames actually allow. */
+  if (Math.abs(center - bmpCenter) < 3){
+    var want = 0;
+    for (var j = lo; j <= hi; j++) if (imgs[j]) want++;
+    if (bmps.size + decoding.size >= want) return;
+  }
+  bmpCenter = center;
   for (var i=lo; i<=hi; i++){
     if (bmps.has(i) || decoding.has(i) || !imgs[i]) continue;
     decoding.add(i);
@@ -713,8 +724,13 @@ function tick(){
   paint(i);
 
   /* chrome that has to survive both ends of the film */
-  hero.style.opacity   = String(Math.max(0, 1 - p/0.13));
+  var hv = Math.max(0, 1 - p/0.13);
+  hero.style.opacity   = String(hv);
   hero.style.transform = "translateY(" + (-p*70) + "px)";
+  /* a faded-out CTA is still a clickable CTA unless it is taken out of the
+     hit-testing tree, and an invisible button that swallows taps is worse
+     than no button */
+  hero.style.visibility = hv < 0.04 ? "hidden" : "";
   cue.style.opacity    = String(Math.max(0, 1 - p/0.07));
   beats.forEach(function(b){
     var at = parseFloat(b.dataset.at);
