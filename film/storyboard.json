@@ -25,6 +25,13 @@
       "refs": []
     },
     {
+      "id": "kf4b",
+      "prompt": "The identical Front Range neighbourhood from the identical downward heading, now much lower than the wide aerial: only a few blocks fill the frame, individual tree crowns read separately, and one straight residential street runs through the middle of the picture between rows of pitched roofs. The light has settled into a low warm sun close to the horizon, throwing long shadows down the length of the street; the mountains are a soft silhouette far behind. Quiet and empty. No text, no signage, no people.",
+      "refs": [
+        "dkf5"
+      ]
+    },
+    {
       "id": "kf5",
       "prompt": "The identical dawn light, dropping further toward one single quiet residential street in that same neighbourhood, seen from above and ahead at a steep angle. Mature trees line both kerbs, a brick and clapboard house with a covered porch sits on the left, the asphalt is still cool in shadow. Parked at the near kerb, small in the frame and seen from behind and to one side, is a tall matte-black high-roof cargo van with a stark green mountain-and-pine-tree graphic across its rear flank and a black roof rack. Its front grille is turned away and not visible. No lettering anywhere, no manufacturer badge, no emblem, no people.",
       "refs": [
@@ -58,10 +65,15 @@
     {
       "id": "c4",
       "duration": 5,
-      "prompt": "Continuing the same descent, the camera drops down toward one single quiet residential street, the tree canopy passing close on both sides until the street and the black van parked at the kerb sit centred below. Same heading, same low sun, constant descent rate, no cuts."
+      "prompt": "Continuing the same descent, the camera drops steadily down toward the neighbourhood until only a few blocks fill the frame and one straight residential street sits centred beneath it. The light warms as it goes and the shadows lengthen. Same heading, constant descent rate, no cuts."
     },
     {
       "id": "c5",
+      "duration": 5,
+      "prompt": "Continuing the same descent without pause, the camera sinks down onto that one street, the tree canopy passing close on both sides, until the asphalt and the black van parked at the kerb sit centred below. Same heading, same low warm sun, constant descent rate, no cuts."
+    },
+    {
+      "id": "c6",
       "duration": 5,
       "prompt": "Continuing the same descent to its end, the camera sinks the last distance down toward the parked black van until the vehicle fills the frame and the asphalt is close beneath, settling low and near behind it. One continuous downward move on the same heading, no cuts."
     }
