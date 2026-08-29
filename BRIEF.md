@@ -171,6 +171,50 @@ paraphrased from onusiv.com. Do not source company history from the skill.**
 If the founder section stays at all, it must credit all three founders or none,
 and must not claim the company began as a mobile service.
 
+## FOUNDERS — client-approved, verified 2026-08-29
+
+Client agreed the page features **Chaz and Kristy** together. They are married and
+co-own and run the business.
+
+| Person | Title | Source |
+|---|---|---|
+| **Chaz Faulhaber** | Founder & Chief Marketing Officer | client; ShoutoutColorado |
+| **Kristy Anderson** | Co-founder; **head of operations and business strategy** | onusiv.com blog, "Co-Founder Kristy in Boulder Lifestyle Magazine" |
+| Dr. Benjamin Wilks, MD | Co-founder, board-certified ER physician | VoyageDenver; press |
+
+**Her surname is Anderson, not Faulhaber.** They are married; she does not use his
+name professionally. Getting this wrong on their own landing page is not survivable.
+
+### The true origin, in Chaz's own words
+From the VoyageDenver interview:
+
+> "In 2014, Kristy and I tried out an iV after a mountain bike race and felt amazing.
+> Our recovery was practically instant & we noticed numerous other benefits, from a
+> reduction in cramping to improved appetite."
+
+They met Dr. Wilks through a mutual friend. **Onus iV Hydration launched at the
+Colfax Marathon in May 2015.** Use **2015** as the founding year — it is what the
+client says and it matches the launch.
+
+### The story the client wants told
+They are bringing the experience of running **brick-and-mortar clinics** *to* the
+mobile experience. Helping people feel and perform better **since 2015**. Real
+**registered nurses** administering treatment.
+
+Note the direction of travel: clinics first, mobile now. This is the opposite of
+what the prototype claimed, and it is also the film's vector — see below.
+
+**Open question to confirm with Spencer before it ships:** the site says
+"**ER-certified team**" and "hospital-based protocols"; the client says "real
+**registered nurses**". Those are different credential claims. Do not blend them.
+Confirm which is accurate for the mobile crew and use only that.
+
+## Assets still needed from Spencer
+Instagram is login-walled from this container — all four reel URLs return the SPA
+shell with no metadata, so no media or captions can be pulled. Real footage and
+stills of Chaz, Kristy and the mobile van need to be downloaded and dropped into
+`site/assets/img/` (or Drive) before they can be used.
+
 ## Do-nots
 
 - Do not commit `film/clips/`, `film/keyframes/`, or any raw mp4. Runtime `frames/` only.
