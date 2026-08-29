@@ -138,6 +138,39 @@ Fonts, as used on their live site: **League Gothic** (display — tall condensed
 - Chromium is preinstalled at `/opt/pw-browsers/chromium`
   (`PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`). Never run `playwright install`.
 
+## CORRECTED FACTS — the prototype got these wrong (verified 2026-08-29)
+
+A first prototype was built on another surface and deployed to
+`https://comfy-starship-e7961e.netlify.app`. Its founder section is **false**.
+It reads: *"Chaz Faulhaber co-founded Onus iV in 2015 as a mobile Sprinter
+service. The locations came afterwards… The van never stopped running."*
+
+**Primary sources say otherwise.** From onusiv.com/our-story, verbatim:
+
+> "Onus was born upon the wheels of a mountain bike in the summer of 2014, when
+> three riders in the Colorado Rockies found themselves dehydrated, exhausted and
+> in need of repair. Having experienced the benefits of an iV in Las Vegas, NV &
+> Scottsdale, AZ, the riders knew what they wanted and set out to provide the same
+> service to the Colorado Front Range."
+
+| Claim on the prototype | Verified |
+|---|---|
+| "co-founded … in 2015" | Born summer **2014** (their Our Story; "Since 2014" on the peptides page). First location opened 2015. Both can be said, but not "founded 2015" alone. |
+| "as a mobile Sprinter service" | **False.** It started from a mountain-bike ride and an IV experienced in Las Vegas / Scottsdale. |
+| "The locations came afterwards" | **Inverted.** The clinics came first. |
+| "The van never stopped running" | **False, and self-defeating** — mobile IV is *launching September 2026*. The page claims the company began as the thing it is about to launch. |
+| Chaz as the sole named founder | There were **three** founders: Chaz Faulhaber (CMO), **Dr. Ben Wilks, MD**, and **Kristy Anderson**. Naming only the marketing co-founder and omitting the physician is a bad look for a medical brand. |
+
+**Where the error came from — fix this at the source.** The `agency-clients`
+skill states: *"Founded 2015, co-founder Chaz Faulhaber, began as a mobile
+Sprinter-van service."* That line is wrong and it is what the prototype
+faithfully repeated. It will keep poisoning future sessions until it is edited.
+
+**Rule for this build: no origin-story claim ships unless it is quoted or
+paraphrased from onusiv.com. Do not source company history from the skill.**
+If the founder section stays at all, it must credit all three founders or none,
+and must not claim the company began as a mobile service.
+
 ## Do-nots
 
 - Do not commit `film/clips/`, `film/keyframes/`, or any raw mp4. Runtime `frames/` only.
