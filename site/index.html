@@ -156,7 +156,10 @@ a{color:inherit}
 
 /* ══════════════════════════════════════════════════ sections below ═══ */
 .sec{position:relative;padding:clamp(6rem,13vh,10rem) var(--gut);
-  min-height:min(92vh,900px);display:flex;align-items:center}
+  min-height:min(92vh,900px);display:flex;align-items:center;
+  /* the header is fixed, so an anchor jump would otherwise land the
+     heading underneath it */
+  scroll-margin-top:calc(var(--chrome,72px) + 1.5rem)}
 .wrap{width:100%;max-width:1180px;margin:0 auto;position:relative;z-index:2}
 .sec .wrap>*{opacity:0;transform:translateY(26px);
   transition:opacity .9s var(--ease),transform .9s var(--ease)}
@@ -566,7 +569,9 @@ ban.querySelector("button").addEventListener("click", function(){
 });
 function sizeHeader(){
   var h = D.getElementById("hdr");
-  h.style.top = (ban.hidden ? 0 : ban.offsetHeight) + "px";
+  var top = ban.hidden ? 0 : ban.offsetHeight;
+  h.style.top = top + "px";
+  D.documentElement.style.setProperty("--chrome", (top + h.offsetHeight) + "px");
 }
 sizeHeader(); W.addEventListener("resize", sizeHeader);
 
