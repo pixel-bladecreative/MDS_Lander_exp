@@ -1,0 +1,93 @@
+{
+  "name": "the-descent-mobile",
+  "aspect": "9:16",
+  "vector": "The camera only ever descends — down through the cloud deck, down over the Front Range, down into a Denver street, down to the van waiting at the curb. It never once climbs and never pulls back.",
+  "vector_direction": "in",
+  "style": "Cinematic photographic realism, natural dawn light, warm low sun, anamorphic 40mm, subtle film grain, deep clean shadows. No text of any kind, no lettering, no signage, no brand logos, no manufacturer badges or emblems, no watermarks, no people, no animals. Vertical 9:16 composition: the subject sits in the centre of a tall frame with generous headroom, and the descent reads down the long axis.",
+  "keyframes": [
+    {
+      "id": "kf1",
+      "prompt": "Aerial view high above an unbroken deck of cloud at first light, looking down and slightly forward. The cloud tops are soft and rolling, lit warm gold along their eastern edges with cool blue-grey in the troughs. Far ahead on the horizon a thin band of clear sky separates the cloud from the pale dawn. Nothing else in frame — no aircraft, no land, no people.",
+      "refs": [
+        "dkf1"
+      ]
+    },
+    {
+      "id": "kf2",
+      "prompt": "The identical dawn cloudscape from the identical heading, now noticeably lower and closer to the cloud tops: the same rolling deck, the same warm gold rims and cool blue-grey troughs, the same clear band on the horizon, but the cloud fills more of the frame and its texture reads in detail. Wisps of vapour begin to pass close beneath the camera. Identical light, identical colour, no aircraft, no people.",
+      "refs": [
+        "dkf2"
+      ]
+    },
+    {
+      "id": "kf3",
+      "prompt": "The identical dawn light, now just below the base of the same cloud deck, still looking down and forward. The underside of the cloud fills the top of the frame in soft grey. Below and ahead, the land has resolved: the snow-dusted ridgelines of the Colorado Front Range running left to right, dark ponderosa forest on their flanks, and beyond them the flat plain opening east. Warm low sun rakes across the ridges. No text, no structures in detail, no people.",
+      "refs": [
+        "dkf3"
+      ]
+    },
+    {
+      "id": "kf4",
+      "prompt": "The identical dawn light and identical downward heading, now much lower and past the ridgelines: a wide residential quarter of a Front Range city seen from above, a grid of tree-lined streets, mature green canopy, pitched roofs, long soft shadows thrown west to east by the low sun. The mountains sit smaller on the horizon behind. Quiet and empty. No text, no signage, no people, no vehicles in detail.",
+      "refs": [
+        "dkf4"
+      ]
+    },
+    {
+      "id": "kf4b",
+      "prompt": "The identical Front Range neighbourhood from the identical downward heading, now much lower than the wide aerial: only a few blocks fill the frame, individual tree crowns read separately, and one straight residential street runs through the middle of the picture between rows of pitched roofs. The light has settled into a low warm sun close to the horizon, throwing long shadows down the length of the street; the mountains are a soft silhouette far behind. Quiet and empty. No text, no signage, no people.",
+      "refs": [
+        "dkf5",
+        "dkf4b"
+      ]
+    },
+    {
+      "id": "kf5",
+      "prompt": "The identical dawn light, dropping further toward one single quiet residential street in that same neighbourhood, seen from above and ahead at a steep angle. Mature trees line both kerbs, a brick and clapboard house with a covered porch sits on the left, the asphalt is still cool in shadow. Parked at the near kerb, small in the frame and seen from behind and to one side, is a tall matte-black high-roof cargo van with a stark green mountain-and-pine-tree graphic across its rear flank and a black roof rack. Its front grille is turned away and not visible. No lettering anywhere, no manufacturer badge, no emblem, no people.",
+      "refs": [
+        "hardware",
+        "dkf5"
+      ]
+    },
+    {
+      "id": "kf6",
+      "prompt": "The identical street, identical house, identical dawn light, now at low height close behind the same tall matte-black high-roof cargo van, which fills much of the frame. The same green mountain-and-pine-tree graphic reads clearly across its rear flank, the same black roof rack runs along the top, its rear doors are still closed. The camera is low and near, still angled down toward the vehicle and the asphalt beneath it. Front grille still turned away and out of view. No lettering, no manufacturer badge, no emblem, no watermark, no people.",
+      "refs": [
+        "hardware",
+        "dkf6"
+      ]
+    }
+  ],
+  "clips": [
+    {
+      "id": "c1",
+      "duration": 5,
+      "prompt": "One unbroken descent: the camera sinks steadily toward the dawn cloud deck, the cloud tops growing closer and filling more of the frame throughout. Locked heading, constant descent rate, no cuts, no scene changes."
+    },
+    {
+      "id": "c2",
+      "duration": 5,
+      "prompt": "Continuing the same steady descent without pause, the camera drops through the cloud base: vapour passes close and thins, and the snow-dusted Front Range ridgelines resolve below and ahead. Same heading, same dawn light, same constant descent rate, no cuts."
+    },
+    {
+      "id": "c3",
+      "duration": 5,
+      "prompt": "Continuing the same descent on the same heading, the camera falls past the ridgelines and down toward the plain, the forested flanks sliding beneath it and a grid of tree-lined residential streets opening below. Constant descent rate, identical dawn light, no cuts."
+    },
+    {
+      "id": "c4",
+      "duration": 5,
+      "prompt": "Continuing the same descent, the camera drops steadily down toward the neighbourhood until only a few blocks fill the frame and one straight residential street sits centred beneath it. The light warms as it goes and the shadows lengthen. Same heading, constant descent rate, no cuts."
+    },
+    {
+      "id": "c5",
+      "duration": 5,
+      "prompt": "Continuing the same descent without pause, the camera sinks down onto that one street, the tree canopy passing close on both sides, until the asphalt and the black van parked at the kerb sit centred below. Same heading, same low warm sun, constant descent rate, no cuts."
+    },
+    {
+      "id": "c6",
+      "duration": 5,
+      "prompt": "Continuing the same descent to its end, the camera sinks the last distance down toward the parked black van until the vehicle fills the frame and the asphalt is close beneath, settling low and near behind it. One continuous downward move on the same heading, no cuts."
+    }
+  ]
+}
