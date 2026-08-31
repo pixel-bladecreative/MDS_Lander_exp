@@ -130,7 +130,7 @@ a{color:inherit}
   text-shadow:0 1px 18px rgba(0,0,0,.7);display:flex;flex-wrap:wrap;gap:.5rem .85rem}
 #hero .eyebrow b{color:var(--lime);font-weight:500}
 #hero h1{font-size:clamp(2.9rem,8.6vw,7.6rem);color:#fff;max-width:none;
-  text-shadow:0 3px 52px rgba(0,0,0,.6);text-wrap:balance}
+  text-shadow:0 3px 52px rgba(0,0,0,.6)}
 #hero .sub{margin:1.5rem 0 2.2rem;color:rgba(255,255,255,.9);max-width:44ch;
   font-size:clamp(1rem,1.25vw,1.18rem);text-shadow:0 1px 26px rgba(0,0,0,.72)}
 #hero .cta{display:flex;flex-wrap:wrap;gap:.8rem;pointer-events:auto}
@@ -617,6 +617,7 @@ var imgs = new Array(FRAME_COUNT);
 var bmps = new Map(), decoding = new Set();
 var B_AHEAD = 48, B_KEEP = 32, bmpCenter = -9999;
 var loaded = 0, displayed = -1, playhead = 0, target = 0, ready = false;
+var heroHidden = false;
 
 function src(i){ return DIR + "f_" + String(i+1).padStart(4,"0") + ".jpg"; }
 
@@ -631,6 +632,8 @@ function pump(){
         im.onload = im.onerror = function(){
           if (im.naturalWidth) imgs[i] = im;
           loaded++; inflight--;
+          /* a frame that lands inside the live window makes the guard stale */
+          if (i >= bmpCenter - 18 && i <= bmpCenter + B_AHEAD) bmpCenter = -9999;
           barEl.style.width = (100*loaded/FRAME_COUNT) + "%";
           if (!ready && loaded > Math.min(72, FRAME_COUNT)) boot();
           fire();
@@ -651,20 +654,16 @@ function nearest(i){
 }
 
 function ensureBitmaps(center){
-  var lo = Math.max(0, center - 18), hi = Math.min(FRAME_COUNT-1, center + B_AHEAD);
-  /* "The playhead barely moved, so there is nothing to do" is wrong straight
-     after a breakpoint swap: the centre gets set while the new frame set is
-     still downloading, nothing is decodable yet, and every later call then
-     early-returns against a starved window — leaving the canvas on the
-     synchronous-decode fallback for as long as the visitor holds still.
-     So while stationary, only skip once the window holds everything the
-     loaded frames actually allow. */
-  if (Math.abs(center - bmpCenter) < 3){
-    var want = 0;
-    for (var j = lo; j <= hi; j++) if (imgs[j]) want++;
-    if (bmps.size + decoding.size >= want) return;
-  }
+  /* Cheap guard: the playhead barely moved, so there is nothing new to decode.
+     It is invalidated from the loader (see pump) whenever a frame lands inside
+     the current window, which is what makes it safe straight after a
+     breakpoint swap — there the centre would otherwise be set while the new
+     frame set is still downloading, leaving the window empty and every later
+     call early-returning against it. Poking the guard from the loader costs
+     O(1) per image; polling for starvation here cost 20ms of p95. */
+  if (Math.abs(center - bmpCenter) < 3) return;
   bmpCenter = center;
+  var lo = Math.max(0, center - 18), hi = Math.min(FRAME_COUNT-1, center + B_AHEAD);
   for (var i=lo; i<=hi; i++){
     if (bmps.has(i) || decoding.has(i) || !imgs[i]) continue;
     decoding.add(i);
@@ -730,7 +729,8 @@ function tick(){
   /* a faded-out CTA is still a clickable CTA unless it is taken out of the
      hit-testing tree, and an invisible button that swallows taps is worse
      than no button */
-  hero.style.visibility = hv < 0.04 ? "hidden" : "";
+  var hvis = hv < 0.04;
+  if (hvis !== heroHidden){ heroHidden = hvis; hero.style.visibility = hvis ? "hidden" : ""; }
   cue.style.opacity    = String(Math.max(0, 1 - p/0.07));
   beats.forEach(function(b){
     var at = parseFloat(b.dataset.at);
