@@ -287,6 +287,32 @@ of the film.
   page to a measured +16 green bias by the footer. Lime is an accent on
   near-black. It never touches a photograph.
 
+## FILM PIPELINE — two failures worth not repeating (2026-08-29)
+
+**1. A negative prompt does not reliably suppress a manufacturer badge.**
+Every van keyframe said "no manufacturer badge, no emblem". The desktop film
+came back clean; the **mobile** film rendered a Mercedes three-pointed star on
+the rear door of its final clip anyway. Caught by cropping the frame, not by
+reading the prompt.
+
+What actually worked, in order:
+- Say the decal **covers the whole rear door across the centre seam**, so there
+  is no bare panel for the model to badge.
+- Enumerate the specific shapes: *no circular emblem, no roundel, no
+  three-pointed star, no ring, no manufacturer badge*.
+- Do **not** just say "artwork" — the first retry produced a photographic
+  scenic wrap. Say **"FLAT STENCIL-STYLE… one solid green colour… a simple
+  two-tone vinyl decal, NOT a photograph, NOT a scenic photo wrap"**.
+
+**Always crop and inspect the van frames of every finished film before shipping.**
+Both aspects, every time. One passed and one did not from the same prompt.
+
+**2. Kie's chain uploads expire.** The extracted last frames that serve as start
+pins live on `tempfile.redpandaai.co`, and they 404 after a few hours. A resumed
+run then fails with "The parameter `content[0].image_url` … resource not found"
+*after* `createTask` has already billed. `film/gen_clips.py` now HEAD-checks a
+cached pin URL and re-uploads from the local jpg when it has gone.
+
 ## Do-nots
 
 - Do not commit `film/clips/`, `film/keyframes/`, or any raw mp4. Runtime `frames/` only.

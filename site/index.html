@@ -111,8 +111,8 @@ a{color:inherit}
 
 /* hero + beats over footage */
 .over{position:absolute;inset:0;z-index:4;pointer-events:none;
-  padding:0 var(--gut);display:flex;align-items:center}
-.over .hold{max-width:min(46ch,92%)}
+  padding:var(--chrome,72px) var(--gut) 0;display:flex;align-items:center}
+.over .hold{max-width:min(54rem,94%)}
 .beat{position:absolute;left:var(--gut);right:var(--gut);top:50%;
   transform:translateY(-50%) translateY(18px);opacity:0;
   transition:opacity .75s var(--ease),transform .75s var(--ease);
@@ -129,8 +129,8 @@ a{color:inherit}
   text-transform:uppercase;color:#fff;opacity:.82;margin:0 0 1.4rem;
   text-shadow:0 1px 18px rgba(0,0,0,.7);display:flex;flex-wrap:wrap;gap:.5rem .85rem}
 #hero .eyebrow b{color:var(--lime);font-weight:500}
-#hero h1{font-size:clamp(3.1rem,9.4vw,8.4rem);color:#fff;
-  text-shadow:0 3px 52px rgba(0,0,0,.6)}
+#hero h1{font-size:clamp(2.9rem,8.6vw,7.6rem);color:#fff;max-width:none;
+  text-shadow:0 3px 52px rgba(0,0,0,.6);text-wrap:balance}
 #hero .sub{margin:1.5rem 0 2.2rem;color:rgba(255,255,255,.9);max-width:44ch;
   font-size:clamp(1rem,1.25vw,1.18rem);text-shadow:0 1px 26px rgba(0,0,0,.72)}
 #hero .cta{display:flex;flex-wrap:wrap;gap:.8rem;pointer-events:auto}
@@ -332,7 +332,7 @@ footer img{height:24px;margin-bottom:1rem;opacity:.9}
     <div class="over" id="hero">
       <div class="hold">
         <p class="eyebrow"><span>Mobile IV</span><span>Denver + the Front Range</span><b>Opening September</b></p>
-        <h1 class="disp">Take Onus<br>of your day.</h1>
+        <h1 class="disp">Take control<br>of your day.</h1>
         <p class="sub">You get the same ER-certified team and the same drips you'd get in our chairs, except now we pull up at your house, your hotel, or wherever your crew is staying for the weekend.</p>
         <div class="cta">
           <a class="btn big" href="#book">Request mobile service</a>
@@ -344,9 +344,9 @@ footer img{height:24px;margin-bottom:1rem;opacity:.9}
     <div class="over" aria-hidden="true">
       <div class="beat" data-at="0.20"><p>Big day coming?</p></div>
       <div class="beat" data-at="0.38"><p>A wedding. A ski week. A team that landed at altitude yesterday.</p></div>
-      <div class="beat" data-at="0.56"><p>Everybody needs to feel good for it.</p></div>
-      <div class="beat" data-at="0.74"><p>So we'll do the driving.</p></div>
-      <div class="beat" data-at="0.90"><p>Anywhere on the Front Range.</p></div>
+      <div class="beat" data-at="0.56"><p>Your peak performance is on its way.</p></div>
+      <div class="beat" data-at="0.74"><p>Let us do the driving.</p></div>
+      <div class="beat" data-at="0.90"><p>Serving Denver and surrounding areas.</p></div>
     </div>
 
     <div id="cue"><span>Scroll</span><i></i></div>

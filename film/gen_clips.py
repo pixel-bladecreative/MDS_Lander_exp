@@ -85,6 +85,15 @@ def upload(path, folder):
     return d["data"]["downloadUrl"]
 
 
+def url_alive(url):
+    try:
+        r = urllib.request.Request(url, headers={"User-Agent": UA}, method="HEAD")
+        with urllib.request.urlopen(r, timeout=30) as f:
+            return f.status == 200
+    except Exception:
+        return False
+
+
 def extract_last(clip, out):
     """The chain's start pin — the clip's REAL final frame.
 
@@ -162,10 +171,18 @@ def main():
 
         # Hand this clip's REAL last frame to the next clip as its start pin.
         if i + 1 < min(limit, len(sb["clips"])):
-            if os.path.exists(chain_url_f):
-                first_url = open(chain_url_f).read().strip()
+            cached = (open(chain_url_f).read().strip()
+                      if os.path.exists(chain_url_f) else None)
+            # Kie serves these from a TEMPFILE CDN and they expire. A resumed run
+            # hours later then dies on a stale start pin with a confusing
+            # "resource not found", after the create call has already billed.
+            # Verify before trusting, and re-upload from the local jpg if gone.
+            if cached and url_alive(cached):
+                first_url = cached
                 log(f"    last frame cached")
             else:
+                if cached:
+                    log(f"    cached last frame expired — re-uploading")
                 extract_last(p, chain)
                 first_url = upload(chain, sb["name"])
                 open(chain_url_f, "w").write(first_url)

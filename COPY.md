@@ -14,7 +14,7 @@ Logo lockup · `Mobile IV` · CTA **Request mobile service**
 
 **Eyebrow** Mobile IV · Denver + the Front Range · Opening September
 
-**H1** Take Onus of your day. We'll come to you.
+**H1** Take control of your day. We'll come to you.
 
 **Sub** You get the same ER-certified team and the same drips you'd get in our
 chairs, except now we pull up at your house, your hotel, or wherever your crew
@@ -28,9 +28,9 @@ is staying for the weekend.
 
 1. Big day coming?
 2. A wedding, a ski week, a team that landed at altitude yesterday.
-3. Everybody needs to feel good for it. Nobody wants to spend the morning driving.
-4. So we'll do the driving.
-5. Mobile IV, anywhere on the Front Range.
+3. Your peak performance is on its way.
+4. Let us do the driving.
+5. Serving Denver and surrounding areas.
 
 ---
 
