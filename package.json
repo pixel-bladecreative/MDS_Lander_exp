@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "netlify-cli": "^27.4.2",
     "playwright": "^1.62.1"
   }
 }
